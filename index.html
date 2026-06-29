@@ -605,6 +605,7 @@
         if (!input.trim()) { updateStats(0, 0); return; }
         const lines = input.split('\n').map(line => line.trim()).filter(line => line.length > 0);
         let totalCount = 0; let totalSum = 0;
+        let htmlBuffer = ''; // Penampung string sementara
 
         for (let i = 0; i < lines.length; i++) {
             const parts = lines[i].split(/\s+/);
@@ -635,7 +636,7 @@
                     currentParsedData.push({ username, amount, name });
                     totalSum += parseInt(amount.replace(/,/g, ''), 10) || 0; totalCount++;
 
-                    tableBody.innerHTML += `<tr>
+                    htmlBuffer += `<tr>
                         <td style="color: var(--border-color); font-weight: bold;">${username}</td>
                         <td class="empty-cell">[Kosong]</td>
                         <td style="color: #4ade80; font-weight: bold;">${amount}</td>
@@ -647,6 +648,7 @@
                 }
             }
         }
+        tableBody.innerHTML = htmlBuffer; // Cetak sekaligus
         updateStats(totalCount, totalSum);
     }
 
@@ -667,7 +669,7 @@
         updateStats(0, 0); currentParsedData = [];
     }
 
-    // ==================== ENGINE MODE 2 ====================
+    // ==================== ENGINE MODE 2 (OPTIMIZED) ====================
     const fileInput = document.getElementById('csvFileInput');
     const fileStatus = document.getElementById('fileStatus');
     const csvTableBody = document.getElementById('csvTableBody');
@@ -684,6 +686,7 @@
         const lines = csvText.split(/\r?\n/);
         let totalCount = 0;
         let totalSum = 0;
+        let htmlBuffer = ''; // Menggunakan buffer agar anti-lag saat data besar
 
         lines.forEach((line, index) => {
             if (line.trim() === '') return;
@@ -702,7 +705,7 @@
                     totalSum += numericValue;
                     totalCount++;
 
-                    csvTableBody.innerHTML += `<tr>
+                    htmlBuffer += `<tr>
                         <td style="font-weight: bold; color: #fff;">${userId}</td>
                         <td style="color: var(--border-color); font-weight: bold;">${nominal}</td>
                         <td style="color: #94a3b8;">${refNumber}</td>
@@ -710,6 +713,7 @@
                 }
             }
         });
+        csvTableBody.innerHTML = htmlBuffer; // Render ke HTML cuma 1 kali di akhir proses
         updateCsvStats(totalCount, totalSum);
     }
 
@@ -735,7 +739,7 @@
         updateCsvStats(0, 0);
     }
 
-    // ==================== ENGINE MODE 3 (AUTO FLUSH) ====================
+    // ==================== ENGINE MODE 3 (OPTIMIZED) ====================
     function handlePanelLastTxIdPaste(event) {
         event.preventDefault();
         const text = (event.clipboardData || window.clipboardData).getData('text').trim();
@@ -795,9 +799,11 @@
         parsedPanelDataArray = filteredList;
 
         let totalSum = 0;
+        let htmlBuffer = ''; // Menggunakan buffer agar lancar jaya bebas freeze
+
         parsedPanelDataArray.forEach(item => {
             totalSum += parseInt(item.coinDepo.replace(/,/g, ''), 10) || 0;
-            tableBody.innerHTML += `
+            htmlBuffer += `
                 <tr>
                     <td style="color: #a0a5b0;">${item.time}</td>
                     <td style="font-weight: bold; color: #fff;">${item.userId}</td>
@@ -806,6 +812,8 @@
                 </tr>
             `;
         });
+
+        tableBody.innerHTML = htmlBuffer; // Cetak seluruh baris tabel sekaligus
 
         document.getElementById('panelTotalTx').innerText = parsedPanelDataArray.length;
         document.getElementById('panelTotalSum').innerText = totalSum.toLocaleString('id-ID');
@@ -840,7 +848,7 @@
         document.getElementById('panelTotalSum').innerText = '0';
     }
 
-    // ==================== ENGINE MODE 4 (PGA MOTION) ====================
+    // ==================== ENGINE MODE 4 ====================
     function handlePgaMotionPaste(event) {
         event.preventDefault();
         const pastedText = (event.clipboardData || window.clipboardData).getData('text');
@@ -862,6 +870,7 @@
         const blocks = input.split(/NOTE/i).map(b => b.trim()).filter(b => b.length > 0);
         let totalCount = 0;
         let totalSum = 0;
+        let htmlBuffer = ''; // Penampung string sementara
 
         blocks.forEach(block => {
             const lines = block.split('\n').map(line => line.trim()).filter(line => line.length > 0);
@@ -891,7 +900,7 @@
                     totalSum += numericValue;
                     totalCount++;
 
-                    tableBody.innerHTML += `<tr>
+                    htmlBuffer += `<tr>
                         <td style="color: var(--border-color); font-weight: bold;">${username}</td>
                         <td class="${isSendPga ? 'empty-cell' : ''}" style="${isSendPga ? '' : 'color: #4ade80; font-weight: bold;'}">${coinValue}</td>
                         <td style="color: #4ade80; font-weight: bold;">${wdValue}</td>
@@ -904,6 +913,7 @@
             }
         });
 
+        tableBody.innerHTML = htmlBuffer; // Cetak sekaligus
         updatePgaMotionStats(totalCount, totalSum);
     }
 
