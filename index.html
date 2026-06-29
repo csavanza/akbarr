@@ -55,13 +55,12 @@
             opacity: 0.45;
         }
 
-        /* PERUBAHAN: Mengubah flex center menjadi penataan rata atas layar */
         .main-container {
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Mengunci panel tetap di posisi atas */
+            align-items: flex-start;
             min-height: 100vh;
-            padding: 40px 15px; /* Memberi jarak manis dari tepi atas browser */
+            padding: 40px 15px;
             box-sizing: border-box;
         }
 
@@ -81,6 +80,26 @@
                 inset 0 1px 3px rgba(255, 255, 255, 0.1);
         }
 
+        /* Penataan Flexbox untuk Header Atas (Kiri & Kanan) */
+        .panel-header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 30px;
+        }
+
+        .header-left {
+            text-align: left;
+        }
+
+        /* Set flexbox kolom agar O.P dan Oprator Ganteng rata tengah satu sama lain */
+        .header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            text-align: center;
+        }
+
         .header-title {
             color: var(--border-color);
             font-size: 28px;
@@ -93,7 +112,25 @@
         .sub-title {
             font-size: 11px;
             color: #94a3b8;
-            margin-bottom: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Desain Khusus untuk Tulisan Pojok Kanan Atas (Rata Tengah) */
+        .right-title {
+            color: var(--neon-blue);
+            font-size: 28px;
+            font-weight: 900;
+            margin-bottom: 5px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0, 240, 255, 0.6), 0 0 2px #fff;
+        }
+
+        .right-subtitle {
+            font-size: 11px;
+            color: #4ade80;
+            font-weight: bold;
             letter-spacing: 1px;
             text-transform: uppercase;
             text-shadow: 0 2px 4px rgba(0,0,0,0.8);
@@ -235,18 +272,16 @@
         .btn-copy-alt { background-color: var(--btn-purple); color: var(--btn-purple-text); border: 1px solid rgba(216, 180, 254, 0.2); }
         .btn-delete { background-color: var(--btn-red); color: var(--btn-red-text); border: 1px solid rgba(242, 74, 74, 0.2); }
 
-        /* PERUBAHAN: Menambahkan pembatas tinggi maksimal dan scroll bar internal pada tabel hasil */
         .table-container { 
             width: 100%; 
-            max-height: 320px; /* Membatasi tinggi agar tidak molor panjang ke bawah */
-            overflow-y: auto;  /* Mengaktifkan scroll bar vertikal jika data sangat banyak */
-            overflow-x: auto;  /* Tetap mengaktifkan scroll horizontal jika kolom lebar */
+            max-height: 320px; 
+            overflow-y: auto;  
+            overflow-x: auto;  
             margin-top: 15px; 
             border-radius: 8px;
             border: 1px solid rgba(255, 153, 0, 0.15);
         }
         
-        /* Desain scrollbar agar senada dengan tema gelap panel */
         .table-container::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -267,7 +302,6 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        /* PERUBAHAN: Membuat header tabel tetap diam di atas (sticky) saat konten di-scroll */
         th {
             text-align: left; color: var(--border-color); font-weight: bold;
             border-bottom: 2px solid rgba(255, 153, 0, 0.5); padding: 14px 12px; font-size: 11px;
@@ -285,7 +319,6 @@
         tr:hover td { color: #fff; background: rgba(0, 240, 255, 0.08); }
         .empty-cell { color: #475569; font-style: italic; }
 
-        /* PERUBAHAN: Jarak box statistik dikunci di bawah tabel sehingga posisinya tidak akan kabur */
         .stats-box {
             margin-top: 20px; background: rgba(9, 15, 29, 0.9); border-left: 4px solid var(--neon-blue);
             padding: 15px; font-size: 12px; color: #94a3b8; line-height: 1.6; border-radius: 0 8px 8px 0;
@@ -369,8 +402,17 @@
 
 <div class="main-container">
     <div class="wrapper">
-        <div class="header-title">ADMIN & PANEL DATA PARSE</div>
-        <div class="sub-title">© AKBAR_RENALDI - Family — Bantu Mempermudah Pekerjaan Oprator Dengan Auto Parse</div>
+        <!-- HEADER ATAS (KIRI DAN KANAN) -->
+        <div class="panel-header-container">
+            <div class="header-left">
+                <div class="header-title">ADMIN & PANEL DATA PARSE</div>
+                <div class="sub-title">© AKBAR_RENALDI - Family — Bantu Mempermudah Pekerjaan Oprator Dengan Auto Parse</div>
+            </div>
+            <div class="header-right">
+                <div class="right-title">O.P</div>
+                <div class="right-subtitle">Oprator Ganteng</div>
+            </div>
+        </div>
 
         <div class="tab-menu">
             <button class="tab-btn active" onclick="switchTab('pasteMode')">AUTO PARSE ADMIN WITHDRAW</button>
@@ -834,14 +876,25 @@
                 let numericValue = parseInt(amount.replace(/,/g, ''), 10) || 0;
 
                 if (username && amount && name) {
-                    parsedPgaMotionDataArray.push({ username, amount, name });
+                    const isSendPga = block.toLowerCase().includes("send pga");
+                    
+                    let coinValue = isSendPga ? '[Kosong]' : amount;
+                    let wdValue = amount;
+
+                    parsedPgaMotionDataArray.push({ 
+                        username, 
+                        coin: isSendPga ? '' : amount, 
+                        wd: wdValue, 
+                        name 
+                    });
+                    
                     totalSum += numericValue;
                     totalCount++;
 
                     tableBody.innerHTML += `<tr>
                         <td style="color: var(--border-color); font-weight: bold;">${username}</td>
-                        <td style="color: #4ade80; font-weight: bold;">${amount}</td>
-                        <td style="color: #4ade80; font-weight: bold;">${amount}</td>
+                        <td class="${isSendPga ? 'empty-cell' : ''}" style="${isSendPga ? '' : 'color: #4ade80; font-weight: bold;'}">${coinValue}</td>
+                        <td style="color: #4ade80; font-weight: bold;">${wdValue}</td>
                         <td class="empty-cell">[Kosong]</td>
                         <td class="empty-cell">[Kosong]</td>
                         <td class="empty-cell">[Rumus]</td>
@@ -863,7 +916,7 @@
         if (parsedPgaMotionDataArray.length === 0) return;
         
         let textToCopy = parsedPgaMotionDataArray.map(item => 
-            `${item.username}\t${item.amount}\t${item.amount}\t\t\t\t${item.name}`
+            `${item.username}\t${item.coin}\t${item.wd}\t\t\t\t${item.name}`
         ).join('\n');
 
         navigator.clipboard.writeText(textToCopy).then(() => {
