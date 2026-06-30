@@ -12,8 +12,12 @@
             --neon-purple: #bd00ff;
             --neon-magenta: #ff0077;
             --text-color: #f1f5f9;
+            --sub-text: #64748b;
+            --table-head-bg: #070312;
+            --table-row-hover: rgba(0, 240, 255, 0.08);
+            --input-bg: rgba(2, 0, 5, 0.9);
+            --box-bg: rgba(7, 3, 14, 0.9);
             
-            /* Warna Tombol Baru Sesuai Request */
             --btn-copy-bg: rgba(0, 240, 255, 0.1);
             --btn-copy-border: #00f0ff;
             --btn-copy-text: #00f0ff;
@@ -25,480 +29,303 @@
             --btn-alt-bg: rgba(189, 0, 255, 0.1);
             --btn-alt-border: #bd00ff;
             --btn-alt-text: #e8a7ff;
+            
+            --scrollbar-thumb: #0d4b53;
+            --scrollbar-track: #020006;
+            --global-radius: 12px;
+            --switch-active: #00f0ff;
         }
+
+        /* TEMA LIGHT MODE */
+        body.light-theme {
+            --bg-color: #f8fafc;
+            --container-bg: rgba(255, 255, 255, 0.95);
+            --text-color: #0f172a;
+            --sub-text: #64748b;
+            --table-head-bg: #0f172a;
+            --table-row-hover: rgba(212, 175, 55, 0.1);
+            --input-bg: #ffffff;
+            --box-bg: #f1f5f9;
+            
+            --btn-copy-bg: rgba(212, 175, 55, 0.1);
+            --btn-copy-border: #d4af37;
+            --btn-copy-text: #aa8412;
+            
+            --btn-delete-bg: rgba(220, 38, 38, 0.08);
+            --btn-delete-border: #dc2626;
+            --btn-delete-text: #b91c1c;
+
+            --btn-alt-bg: rgba(15, 23, 42, 0.05);
+            --btn-alt-border: #0f172a;
+            --btn-alt-text: #0f172a;
+            
+            --scrollbar-thumb: #cbd5e1;
+            --scrollbar-track: #f1f5f9;
+            --switch-active: #10b981;
+            --neon-blue: #d4af37;
+            --neon-purple: #dc2626;
+        }
+
+        body.light-theme .header-title { color: #0f172a; text-shadow: none; animation: none; }
+        body.light-theme .sub-title { color: #dc2626; }
+        body.light-theme textarea, body.light-theme .input-text { color: #0f172a; border: 1px solid #cbd5e1; }
+        body.light-theme .tab-btn { background: #e2e8f0; color: #475569; border: 1px solid #cbd5e1; }
+        body.light-theme .tab-btn.active { background: #0f172a; color: #d4af37; border-color: #d4af37; text-shadow: none; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15); }
+        body.light-theme th { color: #d4af37; text-shadow: none; border-bottom: 2px solid #d4af37; }
+        body.light-theme td { color: #1e293b; border-bottom: 1px solid #e2e8f0; }
+        body.light-theme .settings-dropdown { background: #ffffff; border: 1px solid #e2e8f0; box-shadow: 0 10px 30px rgba(0,0,0,0.08); color: #1e293b; }
+        body.light-theme .setting-row { border-bottom: 1px solid #f1f5f9; }
+        body.light-theme .setting-label { color: #0f172a; }
+        body.light-theme .right-subtitle { color: #d4af37; text-shadow: none; }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            min-height: 100vh;
+            margin: 0; padding: 0; width: 100%; min-height: 100vh;
             font-family: 'Segoe UI', Roboto, sans-serif;
-            background-color: var(--bg-color);
-            overflow-x: hidden;
-            color: var(--text-color);
+            background-color: var(--bg-color); overflow-x: hidden; color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Canvas Efek Pro: Lotus + Neon Dust Particle */
-        #cyberCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-        }
+        #cyberCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        body.light-theme #cyberCanvas { opacity: 0.05; }
 
-        .main-container {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
-            padding: 40px 15px;
-            box-sizing: border-box;
-        }
-
+        .main-container { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 40px 15px; box-sizing: border-box; }
         .wrapper {
-            width: 100%;
-            max-width: 1050px;
-            background: var(--container-bg);
-            backdrop-filter: blur(30px) saturate(250%);
-            -webkit-backdrop-filter: blur(30px) saturate(250%);
-            border: 2px solid transparent;
-            border-image: linear-gradient(135deg, var(--neon-purple), var(--neon-blue)) 1;
-            padding: 35px;
-            border-radius: 4px; 
-            position: relative;
-            box-shadow: 
-                0 0 50px rgba(189, 0, 255, 0.2),
-                0 35px 70px rgba(0, 0, 0, 0.95);
+            width: 100%; max-width: 1050px; background: var(--container-bg);
+            backdrop-filter: blur(30px) saturate(250%); -webkit-backdrop-filter: blur(30px) saturate(250%);
+            border: 2px solid transparent; border-image: linear-gradient(135deg, var(--neon-purple), var(--neon-blue)) 1;
+            padding: 35px; border-radius: var(--global-radius); position: relative;
+            box-shadow: 0 0 50px rgba(189, 0, 255, 0.1), 0 35px 70px rgba(0, 0, 0, 0.95);
         }
+        body.light-theme .wrapper { border: 2px solid #e2e8f0; border-image: none; box-shadow: 0 20px 40px rgba(15, 23, 42, 0.05); border-radius: var(--global-radius); }
 
-        .panel-header-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 35px;
-            border-bottom: 1px dashed rgba(0, 240, 255, 0.2);
-            padding-bottom: 20px;
-            position: relative;
-        }
+        .panel-header-container { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 35px; border-bottom: 1px dashed rgba(0, 240, 255, 0.2); padding-bottom: 20px; position: relative; }
+        body.light-theme .panel-header-container { border-bottom-color: #cbd5e1; }
+        .header-title { color: #fff; font-size: 30px; font-weight: 900; margin-bottom: 5px; letter-spacing: 3px; text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 0 2px var(--neon-blue); animation: pulseGlow 3s infinite alternate; }
+        @keyframes pulseGlow { 0% { text-shadow: 0 0 15px rgba(0, 240, 255, 0.6); } 100% { text-shadow: 0 0 30px rgba(0, 240, 255, 0.9), 0 0 5px var(--neon-blue); } }
+        .sub-title { font-size: 11px; color: var(--sub-text); letter-spacing: 1.5px; text-transform: uppercase; }
+        .header-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 5px; position: relative; }
+        .right-subtitle { font-size: 14px; color: var(--neon-purple); font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; text-shadow: 0 0 15px rgba(189, 0, 255, 0.6); margin-top: 10px; }
 
-        .header-title {
-            color: #fff;
-            font-size: 30px;
-            font-weight: 900;
-            margin-bottom: 5px;
-            letter-spacing: 3px;
-            text-shadow: 0 0 20px rgba(0, 240, 255, 0.8), 0 0 2px var(--neon-blue);
-            animation: pulseGlow 3s infinite alternate;
+        .settings-menu-container { position: relative; display: inline-block; }
+        .settings-btn {
+            background: rgba(0, 240, 255, 0.1); border: 1px solid var(--neon-blue); color: var(--neon-blue);
+            font-size: 14px; padding: 8px 16px; cursor: pointer; border-radius: var(--global-radius); display: flex; align-items: center; gap: 8px; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
         }
+        body.light-theme .settings-btn { background: #0f172a; border-color: #0f172a; color: #fff; }
+        .settings-btn:hover { background: var(--neon-blue); color: #000; box-shadow: 0 0 25px var(--neon-blue); transform: scale(1.02); }
+        body.light-theme .settings-btn:hover { background: #d4af37; border-color: #d4af37; color: #0f172a; box-shadow: none; }
+        
+        .settings-dropdown {
+            position: absolute; top: 125%; right: 0; background: #0b0518; border: 1px solid var(--neon-blue);
+            width: 280px; padding: 18px; box-shadow: 0 10px 30px rgba(0,240,255,0.2); z-index: 1000; display: none; text-align: left; flex-direction: column; gap: 14px; border-radius: var(--global-radius);
+        }
+        .settings-dropdown.show { display: flex; }
+        .setting-row { display: flex; justify-content: space-between; align-items: center; flex-direction: row; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 12px; }
+        .setting-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .setting-label { font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; color: var(--neon-blue); display: flex; align-items: center; gap: 4px; }
+        
+        .switch-control { position: relative; display: inline-block; width: 46px; height: 24px; }
+        .switch-control input { opacity: 0; width: 0; height: 0; }
+        .slider-round {
+            position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #334155; transition: .3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 34px;
+        }
+        body.light-theme .slider-round { background-color: #cbd5e1; }
+        .slider-round:before {
+            position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px;
+            background-color: white; transition: .3s cubic-bezier(0.4, 0, 0.2, 1); border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        input:checked + .slider-round { background-color: var(--switch-active); }
+        input:checked + .slider-round:before { transform: translateX(22px); }
 
-        @keyframes pulseGlow {
-            0% { text-shadow: 0 0 15px rgba(0, 240, 255, 0.6); }
-            100% { text-shadow: 0 0 30px rgba(0, 240, 255, 0.9), 0 0 5px var(--neon-blue); }
-        }
+        .inline-guide-btn { width: 100%; padding: 10px; font-size: 11px; font-weight: bold; background: rgba(189,0,255,0.1); border: 1px solid var(--neon-purple); color: #fff; cursor: pointer; text-transform: uppercase; text-align: center; transition: all 0.2s; border-radius: 8px; }
+        body.light-theme .inline-guide-btn { background: rgba(220, 38, 38, 0.05); border-color: #dc2626; color: #dc2626; }
+        .inline-guide-btn:hover { background: var(--neon-purple); color: #fff; box-shadow: 0 0 15px var(--neon-purple); }
+        body.light-theme .inline-guide-btn:hover { background: #dc2626; color: #fff; box-shadow: none; }
 
-        .sub-title {
-            font-size: 11px;
-            color: #64748b;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-        }
-
-        .header-right {
-            text-align: right;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            gap: 5px;
-        }
-
-        .right-subtitle {
-            font-size: 14px;
-            color: var(--neon-purple);
-            font-weight: bold;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-shadow: 0 0 15px rgba(189, 0, 255, 0.6);
-            margin-top: 10px;
-        }
-
-        /* TOMBOL BUKU PANDUAN DI POJOK KANAN ATAS */
-        .guide-book-btn {
-            background: rgba(0, 240, 255, 0.1);
-            border: 1px solid var(--neon-blue);
-            color: var(--neon-blue);
-            font-size: 20px;
-            padding: 8px 15px;
-            cursor: pointer;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
-            margin-bottom: 5px;
-        }
-        .guide-book-btn span {
-            font-size: 11px;
-            text-transform: uppercase;
-        }
-        .guide-book-btn:hover {
-            background: var(--neon-blue);
-            color: #000;
-            box-shadow: 0 0 25px var(--neon-blue);
-            transform: scale(1.05);
-        }
-
-        /* MODAL POPUP PANDUAN */
-        .guide-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(2, 0, 6, 0.85);
-            backdrop-filter: blur(15px);
-            z-index: 200000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .guide-content {
-            background: #0b0518;
-            border: 2px solid var(--neon-blue);
-            box-shadow: 0 0 50px rgba(0, 240, 255, 0.3);
-            width: 100%;
-            max-width: 750px;
-            max-height: 85vh;
-            overflow-y: auto;
-            padding: 30px;
-            color: #cbd5e1;
-            position: relative;
-        }
-        .guide-content::-webkit-scrollbar { width: 6px; }
-        .guide-content::-webkit-scrollbar-thumb { background: var(--neon-blue); }
-        .guide-title {
-            color: #fff;
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            border-bottom: 1px dashed var(--neon-blue);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            text-shadow: 0 0 10px var(--neon-blue);
-        }
-        .guide-section {
-            margin-bottom: 20px;
-            background: rgba(255,255,255,0.02);
-            padding: 15px;
-            border-left: 3px solid var(--neon-purple);
-        }
-        .guide-section h4 {
-            margin: 0 0 8px 0;
-            color: var(--neon-blue);
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
-        .guide-section p, .guide-section ol {
-            margin: 0;
-            font-size: 12.5px;
-            line-height: 1.6;
-            padding-left: 15px;
-        }
-        /* WARNING BOX VIRUS */
-        .virus-warning-box {
-            background: rgba(255, 0, 119, 0.1);
-            border: 1px solid var(--neon-magenta);
-            padding: 15px;
-            margin-top: 25px;
-            color: #ff9ebd;
-            border-left: 5px solid var(--neon-magenta);
-        }
-        .virus-warning-title {
-            color: var(--neon-magenta);
-            font-weight: 900;
-            font-size: 14px;
-            letter-spacing: 2px;
-            margin-bottom: 5px;
-            text-shadow: 0 0 10px var(--neon-magenta);
-        }
-        .close-guide-btn {
-            background: transparent;
-            border: 1px solid var(--neon-magenta);
-            color: var(--neon-magenta);
-            padding: 10px 20px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 11px;
-            letter-spacing: 1px;
-            margin-top: 20px;
-            float: right;
-            transition: all 0.3s;
-        }
-        .close-guide-btn:hover {
-            background: var(--neon-magenta);
-            color: #fff;
-            box-shadow: 0 0 15px var(--neon-magenta);
-        }
-
-        .tab-menu {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            background: rgba(3, 0, 8, 0.9);
-            color: #64748b;
-            border: 1px solid rgba(189, 0, 255, 0.3);
-            padding: 14px 22px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 12px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            letter-spacing: 1px;
-        }
-
-        .tab-btn:hover {
-            color: var(--neon-blue);
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-        }
-
-        .tab-btn.active {
-            background: linear-gradient(135deg, rgba(189, 0, 255, 0.2), rgba(0, 240, 255, 0.2));
-            color: #fff;
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0, 240, 255, 0.2);
-            text-shadow: 0 0 10px var(--neon-blue);
-        }
+        .tab-menu { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .tab-btn { background: rgba(3, 0, 8, 0.9); color: #64748b; border: 1px solid rgba(189, 0, 255, 0.3); padding: 12px 20px; cursor: pointer; font-weight: bold; font-size: 12px; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); letter-spacing: 1px; border-radius: 8px; }
+        .tab-btn:hover { color: var(--neon-blue); border-color: var(--neon-blue); box-shadow: 0 0 15px rgba(0, 240, 255, 0.1); }
+        .tab-btn.active { background: linear-gradient(135deg, rgba(189, 0, 255, 0.2), rgba(0, 240, 255, 0.2)); color: #fff; border-color: var(--neon-blue); box-shadow: 0 0 25px rgba(0, 240, 255, 0.3); text-shadow: 0 0 10px var(--neon-blue); }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; animation: panelFadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes panelFadeIn { from { opacity: 0; transform: scale(0.99) translateY(5px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        @keyframes panelFadeIn {
-            from { opacity: 0; transform: scale(0.99) translateY(5px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        textarea {
-            width: 100%;
-            height: 160px;
-            background: rgba(2, 0, 5, 0.9);
-            color: #fff;
-            border: 1px solid rgba(189, 0, 255, 0.4);
-            padding: 15px;
-            font-family: 'Consolas', monospace;
-            font-size: 13px;
-            box-sizing: border-box;
-            resize: vertical;
-            box-shadow: inset 0 0 15px rgba(0,0,0,1);
-        }
-
-        textarea:focus, .input-text:focus {
-            outline: none;
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 20px rgba(0, 240, 255, 0.4), inset 0 0 10px rgba(0,0,0,1);
-        }
-
-        .input-text {
-            width: 100%;
-            background: rgba(2, 0, 5, 0.95);
-            color: #fff;
-            border: 1px solid rgba(189, 0, 255, 0.4);
-            padding: 12px;
-            font-family: 'Consolas', monospace;
-            font-size: 13px;
-            box-sizing: border-box;
-            margin-bottom: 15px;
-        }
-
-        .filter-container {
-            background: rgba(10, 2, 22, 0.8);
-            border: 1px solid rgba(189, 0, 255, 0.3);
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-
-        .filter-label {
-            font-size: 11px;
-            color: var(--neon-blue);
-            font-weight: bold;
-            margin-bottom: 6px;
-            display: block;
-            letter-spacing: 1px;
-        }
-
-        .upload-area {
-            border: 2px dashed rgba(189, 0, 255, 0.5);
-            padding: 50px 20px;
-            text-align: center;
-            cursor: pointer;
-            position: relative;
-            background: rgba(2, 0, 5, 0.8);
-            transition: all 0.3s ease;
-        }
-
-        .upload-area:hover {
-            border-color: var(--neon-blue);
-            box-shadow: 0 0 25px rgba(0, 240, 255, 0.25);
-            background: rgba(0, 240, 255, 0.02);
-        }
-
-        .upload-area input[type="file"] {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer;
-        }
-
-        .upload-text {
-            color: #94a3b8; font-size: 13px; font-weight: bold; letter-spacing: 0.5px;
-        }
-
-        .file-status {
-            margin-top: 15px; background: #000; border: 1px solid var(--neon-blue);
-            color: var(--neon-blue); padding: 12px; font-size: 12px; font-weight: bold; display: none;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
-        }
-
-        /* BUTTON CONTROLS - RE-DESIGNED TO HYPER NEON STYLE */
-        .action-buttons { display: flex; gap: 12px; margin: 25px 0; flex-wrap: wrap; }
+        textarea { width: 100%; height: 160px; background: var(--input-bg); color: var(--text-color); border: 1px solid rgba(189, 0, 255, 0.4); padding: 15px; font-family: 'Consolas', monospace; font-size: 13px; box-sizing: border-box; resize: none; box-shadow: inset 0 0 15px rgba(0,0,0,0.5); border-radius: var(--global-radius); }
+        body.light-theme textarea { box-shadow: none; }
         
-        .btn {
-            padding: 14px 26px; 
-            border: 1px solid transparent; 
-            font-size: 11px; 
-            font-weight: 900;
-            cursor: pointer; 
-            transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            text-transform: uppercase; 
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: var(--scrollbar-track); }
+        ::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--neon-blue); }
 
-        .btn-copy { 
-            background: var(--btn-copy-bg); 
-            color: var(--btn-copy-text); 
-            border-color: var(--btn-copy-border);
-            box-shadow: 0 0 10px rgba(0, 240, 255, 0.1);
-        }
-        .btn-copy:hover { 
-            background: var(--neon-blue);
-            color: #000;
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.7);
-            transform: translateY(-2px);
-        }
+        textarea:focus, .input-text:focus { outline: none; border-color: var(--neon-blue); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+        body.light-theme textarea:focus, body.light-theme .input-text:focus { border-color: #d4af37; box-shadow: 0 0 12px rgba(212, 175, 55, 0.2); }
+        
+        .input-text { width: 100%; background: var(--input-bg); color: var(--text-color); border: 1px solid rgba(189, 0, 255, 0.4); padding: 12px; font-family: 'Consolas', monospace; font-size: 13px; box-sizing: border-box; margin-bottom: 15px; border-radius: 8px; }
 
-        .btn-copy-alt {
-            background: var(--btn-alt-bg);
-            color: var(--btn-alt-text);
-            border-color: var(--btn-alt-border);
-            box-shadow: 0 0 10px rgba(189, 0, 255, 0.1);
-        }
-        .btn-copy-alt:hover {
-            background: var(--neon-purple);
-            color: #fff;
-            box-shadow: 0 0 30px rgba(189, 0, 255, 0.7);
-            transform: translateY(-2px);
-        }
+        .filter-container { background: var(--box-bg); border: 1px solid rgba(189, 0, 255, 0.3); padding: 15px; margin-bottom: 20px; border-radius: var(--global-radius); }
+        body.light-theme .filter-container { border-color: #cbd5e1; }
+        .filter-label { font-size: 11px; color: var(--neon-blue); font-weight: bold; margin-bottom: 6px; display: block; letter-spacing: 1px; }
 
-        .btn-delete { 
-            background: var(--btn-delete-bg); 
-            color: var(--btn-delete-text); 
-            border-color: var(--btn-delete-border);
-            box-shadow: 0 0 10px rgba(255, 0, 119, 0.1);
-        }
-        .btn-delete:hover { 
-            background: var(--neon-magenta);
-            color: #fff;
-            box-shadow: 0 0 30px rgba(255, 0, 119, 0.7);
-            transform: translateY(-2px);
-        }
+        .upload-area { border: 2px dashed rgba(189, 0, 255, 0.5); padding: 50px 20px; text-align: center; cursor: pointer; position: relative; background: var(--input-bg); transition: all 0.3s ease; border-radius: var(--global-radius); }
+        body.light-theme .upload-area { border-color: #cbd5e1; }
+        .upload-area:hover { border-color: var(--neon-blue); box-shadow: 0 0 25px rgba(0, 240, 255, 0.15); }
+        body.light-theme .upload-area:hover { border-color: #d4af37; box-shadow: none; background: #f8fafc; }
+        .upload-area input[type="file"] { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
+        .upload-text { color: var(--sub-text); font-size: 13px; font-weight: bold; letter-spacing: 0.5px; }
 
+        .file-status { margin-top: 15px; background: #000; border: 1px solid var(--neon-blue); color: var(--neon-blue); padding: 12px; font-size: 12px; font-weight: bold; display: none; border-radius: 8px; }
+        body.light-theme .file-status { background: #0f172a; color: #fff; border-color: #0f172a; }
+
+        .action-buttons { display: flex; gap: 12px; margin: 25px 0; flex-wrap: wrap; }
+        .btn { padding: 12px 24px; border: 1px solid transparent; font-size: 11px; font-weight: 900; cursor: pointer; transition: all 0.25s ease; text-transform: uppercase; letter-spacing: 1px; position: relative; overflow: hidden; border-radius: 8px; }
+
+        .btn-copy { background: var(--btn-copy-bg); color: var(--btn-copy-text); border-color: var(--btn-copy-border); }
+        .btn-copy:hover { background: var(--neon-blue); color: #000; transform: translateY(-1px); }
+        body.light-theme .btn-copy:hover { background: #d4af37; color: #0f172a; }
+
+        .btn-copy-alt { background: var(--btn-alt-bg); color: var(--btn-alt-text); border-color: var(--btn-alt-border); }
+        .btn-copy-alt:hover { background: var(--neon-purple); color: #fff; transform: translateY(-1px); }
+        body.light-theme .btn-copy-alt:hover { background: #0f172a; color: #fff; }
+
+        .btn-delete { background: var(--btn-delete-bg); color: var(--btn-delete-text); border-color: var(--btn-delete-border); }
+        .btn-delete:hover { background: var(--neon-magenta); color: #fff; transform: translateY(-1px); }
+        body.light-theme .btn-delete:hover { background: #dc2626; color: #fff; }
         .btn:active { transform: translateY(0); }
         
-        /* TABLE INTERFACE PRO */
-        .table-container { 
-            width: 100%; 
-            max-height: 350px; 
-            overflow-y: auto;  
-            overflow-x: auto;  
-            margin-top: 20px; 
-            border: 1px solid rgba(189, 0, 255, 0.3);
-            background: rgba(0, 0, 0, 0.6);
-        }
-        
-        .table-container::-webkit-scrollbar { width: 6px; height: 6px; }
-        .table-container::-webkit-scrollbar-track { background: #020006; }
-        .table-container::-webkit-scrollbar-thumb { background: rgba(0, 240, 255, 0.3); }
-        .table-container::-webkit-scrollbar-thumb:hover { background: var(--neon-blue); }
+        .table-container { width: 100%; max-height: 350px; overflow-y: auto; overflow-x: auto; margin-top: 20px; border: 1px solid rgba(189, 0, 255, 0.3); background: rgba(0, 0, 0, 0.2); border-radius: var(--global-radius); }
+        body.light-theme .table-container { border-color: #e2e8f0; background: #ffffff; }
 
-        table {
-            width: 100%; border-collapse: collapse; font-size: 13px; 
-        }
-
-        th {
-            text-align: left; color: var(--neon-blue); font-weight: bold;
-            border-bottom: 2px solid var(--neon-blue); padding: 16px 14px; font-size: 11px;
-            text-transform: uppercase; background: #070312; letter-spacing: 1px;
-            position: sticky; top: 0; z-index: 10;
-            text-shadow: 0 0 10px rgba(0, 240, 255, 0.5);
-        }
-
-        td {
-            padding: 14px; border-bottom: 1px solid rgba(189, 0, 255, 0.1);
-            color: #cbd5e1;
-        }
-
-        tr:hover td { color: #fff; background: rgba(0, 240, 255, 0.08); }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th { text-align: left; color: var(--neon-blue); font-weight: bold; border-bottom: 2px solid var(--neon-blue); padding: 16px 14px; font-size: 11px; text-transform: uppercase; background: var(--table-head-bg); letter-spacing: 1px; position: sticky; top: 0; z-index: 10; }
+        td { padding: 14px; border-bottom: 1px solid rgba(189, 0, 255, 0.1); color: var(--text-color); }
+        tr:hover td { background: var(--table-row-hover); }
         .empty-cell { color: #475569; font-style: italic; }
 
-        .stats-box {
-            margin-top: 25px; 
-            background: rgba(7, 3, 14, 0.9); 
-            border-left: 4px solid var(--neon-purple);
-            padding: 18px; font-size: 12px; color: #94a3b8; line-height: 1.7;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.6);
-            border-top: 1px solid rgba(189, 0, 255, 0.1);
-        }
-        .stats-box span { font-weight: bold; color: var(--neon-blue); text-shadow: 0 0 10px rgba(0, 240, 255, 0.4); }
+        .stats-box { margin-top: 25px; background: var(--box-bg); border-left: 4px solid var(--neon-purple); padding: 18px; font-size: 12px; color: var(--sub-text); line-height: 1.7; box-shadow: 0 5px 20px rgba(0,0,0,0.05); border-radius: 0 var(--global-radius) var(--global-radius) 0; }
+        body.light-theme .stats-box { border-left-color: #dc2626; }
+        .stats-box span { font-weight: bold; color: var(--neon-blue); }
 
-        /* TOAST NOTIFICATION PRO */
-        .toast-notif {
-            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px);
-            background: #000; color: var(--neon-blue); padding: 14px 40px; font-size: 12px;
-            font-weight: 900; border-radius: 0; border: 1px solid var(--neon-blue); opacity: 0; visibility: hidden;
-            transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
-            box-shadow: 0 0 30px rgba(0, 240, 255, 0.6); z-index: 9999;
-            letter-spacing: 1.5px; text-transform: uppercase;
-        }
+        .toast-notif { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%) translateY(20px); background: #000; color: var(--neon-blue); padding: 14px 40px; font-size: 12px; font-weight: 900; border-radius: 30px; border: 1px solid var(--neon-blue); opacity: 0; visibility: hidden; transition: all 0.3s ease; box-shadow: 0 0 30px rgba(0, 240, 255, 0.3); z-index: 9999; letter-spacing: 1.5px; text-transform: uppercase; }
+        body.light-theme .toast-notif { background: #0f172a; color: #d4af37; border-color: #d4af37; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         .toast-notif.show { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
-        /* SECURITY OVERLAY SYSTEMS */
-        .security-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: #050002; z-index: 100000;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; color: #fff; font-family: 'Courier New', monospace;
-            animation: redGlowPulse 1.5s infinite alternate;
+        /* PANDUAN MODAL */
+        .guide-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 0, 6, 0.85); backdrop-filter: blur(15px); z-index: 200000; display: none; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
+        .guide-content { background: #0b0518; border: 2px solid var(--neon-blue); box-shadow: 0 0 50px rgba(0, 240, 255, 0.2); width: 100%; max-width: 750px; max-height: 85vh; overflow-y: auto; padding: 30px; color: #cbd5e1; position: relative; border-radius: var(--global-radius); }
+        body.light-theme .guide-content { background: #ffffff; color: #1e293b; border-color: #0f172a; }
+        .guide-title { color: #fff; font-size: 22px; font-weight: 900; letter-spacing: 2px; border-bottom: 1px dashed var(--neon-blue); padding-bottom: 10px; margin-bottom: 20px; text-shadow: 0 0 10px var(--neon-blue); }
+        body.light-theme .guide-title { color: #0f172a; text-shadow: none; border-bottom-color: #cbd5e1; }
+        .guide-section { margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 15px; border-left: 3px solid var(--neon-purple); border-radius: 0 8px 8px 0; }
+        body.light-theme .guide-section { background: #f8fafc; border-left-color: #dc2626; }
+        .guide-section h4 { margin: 0 0 8px 0; color: var(--neon-blue); font-size: 14px; letter-spacing: 1px; }
+        body.light-theme .guide-section h4 { color: #0f172a; }
+        .guide-section p, .guide-section ol { margin: 0; font-size: 12.5px; line-height: 1.6; padding-left: 15px; }
+        .virus-warning-box { background: rgba(255, 0, 119, 0.1); border: 1px solid var(--neon-magenta); padding: 15px; margin-top: 25px; color: #ff9ebd; border-left: 5px solid var(--neon-magenta); border-radius: 0 8px 8px 0; }
+        body.light-theme .virus-warning-box { background: #fef2f2; color: #991b1b; border-color: #fca5a5; border-left-color: #b91c1c; }
+        .virus-warning-title { color: var(--neon-magenta); font-weight: 900; font-size: 14px; letter-spacing: 2px; margin-bottom: 5px; }
+        body.light-theme .virus-warning-title { color: #b91c1c; }
+        .close-guide-btn { background: transparent; border: 1px solid var(--neon-magenta); color: var(--neon-magenta); padding: 10px 20px; cursor: pointer; font-weight: bold; font-size: 11px; letter-spacing: 1px; margin-top: 20px; float: right; transition: all 0.3s; border-radius: 8px; }
+        body.light-theme .close-guide-btn { border-color: #dc2626; color: #dc2626; }
+        .close-guide-btn:hover { background: var(--neon-magenta); color: #fff; }
+        body.light-theme .close-guide-btn:hover { background: #dc2626; color: #fff; }
+
+        /* ==================== SCREEN LOCK YANG DIUPGRADE ==================== */
+        .security-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: #000000; z-index: 100000; display: none; 
+            flex-direction: column; justify-content: center; align-items: center; text-align: center; 
         }
-        @keyframes redGlowPulse {
-            0% { box-shadow: inset 0 0 50px rgba(255, 0, 85, 0.4); }
-            100% { box-shadow: inset 0 0 150px rgba(255, 0, 85, 0.7); }
+        #matrixCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0.75; }
+        
+        .security-content-box { 
+            position: relative; 
+            z-index: 2; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+            max-width: 750px;
+            width: 100%;
         }
-        .danger-sign { font-size: 60px; color: var(--neon-magenta); text-shadow: 0 0 20px var(--neon-magenta); margin-bottom: 5px; animation: blinker 0.8s linear infinite; }
-        .security-title { font-size: 36px; font-weight: 900; letter-spacing: 6px; margin: 10px 0; }
-        .danger-subtitle { font-size: 40px; font-weight: 900; color: var(--neon-magenta); letter-spacing: 10px; text-shadow: 0 0 20px var(--neon-magenta); }
-        .skull-graphic { font-size: 90px; color: #e2e8f0; text-shadow: 0 0 40px rgba(255, 0, 85, 0.6); }
-        @keyframes blinker { 50% { opacity: 0.2; } }
-        .close-sec-btn { margin-top: 40px; background: transparent; border: 1px solid var(--neon-magenta); color: var(--neon-magenta); padding: 12px 30px; font-weight: bold; cursor: pointer; letter-spacing: 2px; }
-        .close-sec-btn:hover { background: var(--neon-magenta); color: #fff; box-shadow: 0 0 25px var(--neon-magenta); }
+        
+        .danger-sign { 
+            font-size: 75px; 
+            color: #ff0055; 
+            margin-bottom: 5px; 
+            animation: pulseSkull 1s infinite alternate; 
+            text-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055; 
+        }
+        .security-title { 
+            font-size: 38px; 
+            font-weight: 900; 
+            letter-spacing: 6px; 
+            color: #ffffff; 
+            text-shadow: 0 0 15px rgba(255,255,255,0.8); 
+            margin: 5px 0; 
+            font-family: 'Courier New', monospace; 
+        }
+        .danger-subtitle { 
+            font-size: 42px; 
+            font-weight: 900; 
+            color: #ff0055; 
+            letter-spacing: 8px; 
+            font-family: 'Courier New', monospace; 
+            text-shadow: 0 0 20px #ff0055, 0 0 40px #ff0055; 
+            margin-bottom: 25px; 
+        }
+        
+        .skull-graphic-svg {
+            width: 110px;
+            height: 110px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 1.8;
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.9));
+            margin-bottom: 35px;
+            animation: glitchEffect 0.3s infinite alternate;
+        }
+
+        .system-error-log {
+            border-top: 2px dashed #ff0055;
+            border-bottom: 2px dashed #ff0055;
+            padding: 20px 0;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 30px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.6;
+            color: #a3ffb4;
+            text-shadow: 0 0 5px rgba(163, 255, 180, 0.4);
+            text-align: left;
+        }
+        .log-alert { color: #ff0055; font-weight: bold; text-shadow: 0 0 8px #ff0055; }
+
+        .loop-instruction {
+            color: #ffffff;
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            animation: pulseBlink 1.5s infinite;
+        }
+        .key-btn {
+            background-color: #ff0055;
+            color: #fff;
+            padding: 2px 8px;
+            font-weight: bold;
+            border-radius: 3px;
+            box-shadow: 0 0 10px #ff0055;
+        }
+
+        @keyframes pulseSkull { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+        @keyframes pulseBlink { 0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; } }
+        @keyframes glitchEffect { 0% { transform: skewX(0deg); } 50% { transform: skewX(-2deg); } 100% { transform: skewX(1deg); } }
     </style>
 </head>
 <body>
@@ -508,165 +335,201 @@
 <!-- MODAL BUKU PANDUAN PENGGUNAAN -->
 <div id="guideModal" class="guide-modal">
     <div class="guide-content">
-        <div class="guide-title">⚙ TERMINAL MANUAL & GUIDELINES</div>
+        <div class="guide-title" id="mGuideTitle">⚙️ TERMINAL MANUAL & PEDOMAN</div>
         
         <div class="guide-section">
-            <h4>1. TAB: ADMIN WITHDRAW</h4>
-            <ol>
-                <li>Salin (Copy) seluruh log teks transaksi penarikan dari grup/sistem Anda.</li>
-                <li>Tempel (Paste) teks tersebut ke dalam **Kotak Textarea** (kolom kosong besar teratas). Proses pemisahan data akan berjalan otomatis.</li>
-                <li>Klik tombol **"COPY DATA UTAMA"** untuk mengambil hasil bersih yang terstruktur, atau **"HAPUS ALL DATA"** untuk mengosongkan riwayat.</li>
+            <h4 id="mSec1Title">1. TAB: PENARIKAN ADMIN</h4>
+            <ol id="mSec1List">
+                <li>Salin seluruh log teks transaksi penarikan dari grup/sistem Anda.</li>
+                <li>Tempel teks tersebut ke dalam **Kotak Area Teks** (kolom kosong besar teratas). Proses pemisahan data akan berjalan otomatis.</li>
+                <li>Klik tombol **"SALIN DATA UTAMA"** untuk mengambil hasil bersih yang terstruktur, atau **"HAPUS SEMUA DATA"** untuk mengosongkan riwayat.</li>
             </ol>
         </div>
 
         <div class="guide-section">
-            <h4>2. TAB: ADMIN QRIS PGA</h4>
-            <ol>
+            <h4 id="mSec2Title">2. TAB: ADMIN QRIS PGA</h4>
+            <ol id="mSec2List">
                 <li>Siapkan file laporan berformat `.csv`.</li>
-                <li>Tarik & taruh (*Drag & Drop*) file tersebut ke kotak putus-putus, atau klik area **"DRAG & DROP CSV FILE..."** untuk memilih berkas dari folder perangkat Anda.</li>
-                <li>Gunakan tombol **"COPY ID & NOMINAL"** atau **"COPY REF NUMBER"** untuk menyalin matriks data yang diinginkan secara instan.</li>
+                <li>Tarik & taruh file tersebut ke kotak putus-putus, atau klik area **"TARIK & LEPAS FILE CSV / KLIK UNTUK MEMILIH"** untuk memilih berkas dari folder perangkat Anda.</li>
+                <li>Gunakan tombol **"SALIN ID & NOMINAL"** atau **"SALIN NOMOR REFERENSI"** untuk menyalin matriks data yang diinginkan secara instan.</li>
             </ol>
         </div>
 
         <div class="guide-section">
-            <h4>3. TAB: PANEL QRIS CEPAT</h4>
-            <ol>
-                <li>Jika ingin memfilter data lama, salin *Transaction ID* terakhir Anda lalu tempel di kolom **"LAST TRANSACTION FILTER TRACKER"**.</li>
-                <li>Salin seluruh isi log teks dari panel admin Anda, kemudian tempel (*Paste*) di kotak **"PANEL INPUT LOG"** bawahnya.</li>
-                <li>Klik **"COPY DATA UTAMA PANEL"** atau **"COPY SEMUA TX ID"** untuk mengekstrak data log yang valid.</li>
+            <h4 id="mSec3Title">3. TAB: PANEL QRIS CEPAT</h4>
+            <ol id="mSec3List">
+                <li>Jika ingin memfilter data lama, salin ID Transaksi terakhir Anda lalu tempel di kolom **"PELACAK FILTER TRANSAKSI TERAKHIR"**.</li>
+                <li>Salin seluruh isi log teks dari panel admin Anda, kemudian tempel di kotak **"LOG MASUKAN PANEL"** bawahnya.</li>
+                <li>Klik **"SALIN DATA UTAMA PANEL"** atau **"SALIN SEMUA ID TX"** untuk mengekstrak data log yang valid.</li>
             </ol>
         </div>
 
         <div class="guide-section">
-            <h4>4. TAB: PGA MOTION</h4>
-            <ol>
+            <h4 id="mSec4Title">4. TAB: PGA MOTION</h4>
+            <ol id="mSec4List">
                 <li>Salin baris teks transaksi dari log PGA Motion yang berisi struktur kata kunci "NOTE".</li>
-                <li>Tempel (*Paste*) langsung ke dalam kotak teks **"PGA MOTION INPUT"**.</li>
-                <li>Klik **"COPY MAIN DATA MOTION"** untuk memindahkan tumpukan data bersih ke clipboard Anda.</li>
+                <li>Tempel langsung ke dalam kotak teks **"MASUKAN PGA MOTION"**.</li>
+                <li>Klik **"SALIN DATA UTAMA MOTION"** untuk memindahkan tumpukan data bersih ke papan klip Anda.</li>
             </ol>
         </div>
 
         <div class="virus-warning-box">
-            <div class="virus-warning-title">⚠ HIGH RISK WARNING SYSTEM ⚠</div>
-            Seluruh berkas arsitektur, log data, dan sistem internal pada file ini telah diinjeksikan program **Cyber Ransom Virus**. Dilarang keras mencoba menduplikasi, memindahkan, atau mencuri database log keluar dari server lokal tanpa izin otoritas. Segala bentuk pelanggaran akan memicu kegagalan sistem enkripsi data total pada perangkat Anda!
+            <div class="virus-warning-title" id="mWarnTitle">⚠️ SISTEM PERINGATAN RISIKO TINGGI ⚠️</div>
+            <span id="mWarnDesc">Seluruh berkas arsitektur, log data, dan sistem internal pada file ini telah diinjeksikan program **Virus Ransomware Siber**. Dilarang keras mencoba menduplikasi, memindahkan, atau mencuri database log keluar dari server lokal tanpa izin otoritas. Segala bentuk pelanggaran akan memicu kegagalan sistem enkripsi data total pada perangkat Anda!</span>
         </div>
 
-        <button class="close-guide-btn" onclick="toggleGuide(false)">CLOSE MANUAL</button>
+        <button class="close-guide-btn" id="mBtnClose" onclick="toggleGuide(false)">TUTUP PANDUAN</button>
     </div>
 </div>
 
+<!-- SCREEN LOCK GENERASI BARU -->
 <div id="securityOverlay" class="security-overlay">
-    <div class="danger-sign">⚠</div>
-    <div class="security-title">CYBER SECURITY</div>
-    <div class="danger-subtitle">SYSTEM LOCK</div>
-    <div class="skull-graphic">☠</div>
-    <button class="close-sec-btn" onclick="closeSecurityView()">UNLOCK CONSOLE</button>
+    <canvas id="matrixCanvas"></canvas>
+    <div class="security-content-box">
+        <div class="danger-sign">⚠️</div>
+        <div class="security-title">CYBER SECURITY</div>
+        <div class="danger-subtitle">SYSTEM LOCK</div>
+        
+        <!-- SVG Tengkorak Custom -->
+        <svg class="skull-graphic-svg" viewBox="0 0 24 24">
+            <path d="M12 2C7.03 2 3 6.03 3 11c0 2.56 1.07 4.87 2.78 6.5L4 19v2h3v-1.15c1.47.73 3.14 1.15 5 1.15s3.53-.42 5-1.15V21h3v-2l-1.78-1.5C19.93 15.87 21 13.56 21 11c0-4.97-4.03-9-9-9zm-3 9c-.83 0-1.5-.67-1.5-1.5S8.17 7 9 7s1.5 0 1.5 1.5S9.83 11 9 11zm6 0c-.83 0-1.5-.67-1.5-1.5S14.17 7 15 7s1.5 0 1.5 1.5S15.83 11 15 11zm-3 7c-1.66 0-3-1.34-3-3h6c0 1.66-1.34 3-3 3z"/>
+        </svg>
+
+        <!-- Pesan Log Eror Realistis -->
+        <div class="system-error-log">
+            &gt; [STATUS]: <span class="log-alert">PELANGGARAN_INTI_KRITIS</span><br>
+            &gt; [SISTEM]: Arsitektur sistem utama telah dibajak oleh terminal jarak jauh.<br>
+            &gt; [GALAT]: Pengambilalihan logika kunci enkripsi mengunci perintah eksekusi.<br>
+            &gt; <span class="log-alert">AKSES KONSOL SEPENUHNYA DINONAKTIFKAN DARI AREA LOKAL.</span>
+        </div>
+    </div>
 </div>
 
 <div class="main-container">
     <div class="wrapper">
         <div class="panel-header-container">
             <div class="header-left">
-                <div class="header-title">PANEL DATA PARSE ADMIN</div>
-                <div class="sub-title">© Jlmaaakbar - Avanzagroup — Edition purple Hyper Cyber Lotus</div>
+                <div class="header-title" id="uiTitle">PANEL DATA PARSE ADMIN</div>
+                <div class="sub-title">© Jlmaaakbar - Avanzagroup — DATA PARSE EDITION Hyper Cyber Lotus</div>
             </div>
             <div class="header-right">
-                <button class="guide-book-btn" onclick="toggleGuide(true)">📖 <span>Buku Panduan</span></button>
-                <div class="right-subtitle">Operator Ganteng</div>
+                <div class="settings-menu-container">
+                    <button class="settings-btn" onclick="toggleSettingsDropdown(event)">⚙️ <span id="uiSetBtn">PENGATURAN</span></button>
+                    <div class="settings-dropdown" id="settingsDropdown">
+                        <div class="setting-row">
+                            <div class="setting-label" id="uiModeLabel">Mode gelap <span style="font-size:10px; opacity:0.6; text-transform:lowercase; font-family:serif; border:1px solid; border-radius:50%; width:12px; height:12px; display:inline-flex; align-items:center; justify-content:center; margin-left:2px;">i</span></div>
+                            <label class="switch-control">
+                                <input type="checkbox" id="themeToggleSwitch" onchange="toggleThemeViaSwitch(this)">
+                                <span class="slider-round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <div class="setting-label" id="uiLangLabel">Bahasa Inggris (EN)</div>
+                            <label class="switch-control">
+                                <input type="checkbox" id="langToggleSwitch" onchange="toggleLangViaSwitch(this)">
+                                <span class="slider-round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row" style="margin-top: 5px;">
+                            <button class="inline-guide-btn" id="uiOpenManualBtn" onclick="openManualFromSettings()">📖 <span id="uiOpenManualText">BUKU PANDUAN</span></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="right-subtitle" id="uiOperator">Operator Ganteng</div>
             </div>
         </div>
 
         <div class="tab-menu">
-            <button class="tab-btn active" onclick="switchTab('pasteMode')">ADMIN WITHDRAW</button>
-            <button class="tab-btn" onclick="switchTab('csvMode')">ADMIN QRIS PGA</button>
-            <button class="tab-btn" onclick="switchTab('panelMode')">PANEL QRIS CEPAT</button>
-            <button class="tab-btn" onclick="switchTab('pgaMotionMode')">PGA MOTION</button>
+            <button class="tab-btn active" id="tabWd" onclick="switchTab('pasteMode', event)">PENARIKAN ADMIN</button>
+            <button class="tab-btn" id="tabQris" onclick="switchTab('csvMode', event)">ADMIN QRIS PGA</button>
+            <button class="tab-btn" id="tabPanel" onclick="switchTab('panelMode', event)">PANEL QRIS CEPAT</button>
+            <button class="tab-btn" id="tabPga" onclick="switchTab('pgaMotionMode', event)">PGA MOTION</button>
         </div>
 
         <!-- TAB 1 -->
         <div id="pasteMode" class="tab-content active">
             <textarea id="rawInput" placeholder="Tempel teks transaksi di sini..." onpaste="handleAutoPaste(event)"></textarea>
             <div class="action-buttons">
-                <button class="btn btn-copy" onclick="copyPasteData()">COPY DATA UTAMA</button>
-                <button class="btn btn-delete" onclick="clearPasteData()">HAPUS ALL DATA</button>
+                <button class="btn btn-copy" id="btnCopyWd" onclick="copyPasteData()">SALIN DATA UTAMA</button>
+                <button class="btn btn-delete" id="btnClearWd" onclick="clearPasteData()">HAPUS SEMUA DATA</button>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Kolom A (USERNAME)</th>
-                            <th>Kolom B (COIN)</th>
-                            <th>Kolom C (WD)</th>
-                            <th>Kolom D (KREDIT)</th>
-                            <th>Kolom E (DEBET)</th>
-                            <th>Kolom F (SALDO)</th>
-                            <th>Kolom G (KETERANGAN)</th>
+                            <th id="thUsr1">ID PENGGUNA ↕</th>
+                            <th id="thCoin1">KOIN ↕</th>
+                            <th id="thWd1">PENARIKAN ↕</th>
+                            <th id="thKredit1">KREDIT ↕</th>
+                            <th id="thDebet1">DEBET ↕</th>
+                            <th id="thSaldo1">SALDO ↕</th>
+                            <th id="thKet1">NAMA PENGGUNA ↕</th>
                         </tr>
                     </thead>
                     <tbody id="pasteTableBody"></tbody>
                 </table>
             </div>
-            <div class="stats-box">
-                CORE SYSTEM >> Total Transactions: <span id="totalTx">0</span> | Total Amount: Rp <span id="totalAmount">0</span>
+            <div class="stats-box" id="statsWd">
+                SISTEM INTI >> Total Transaksi: <span id="totalTx">0</span> | Total Nominal: Rp <span id="totalAmount">0</span>
             </div>
         </div>
 
         <!-- TAB 2 -->
         <div id="csvMode" class="tab-content">
             <div class="upload-area">
-                <div class="upload-text">DRAG & DROP CSV FILE / KLIK UNTUK AMBIL DATA FOLDER</div>
+                <div class="upload-text" id="uiUploadText">TARIK & LEPAS FILE CSV / KLIK UNTUK MEMILIH DATA FOLDER</div>
                 <input type="file" id="csvFileInput" accept=".csv">
             </div>
             <div class="file-status" id="fileStatus"></div>
             <div class="action-buttons">
-                <button class="btn btn-copy" onclick="copyIdAndNominal()">COPY ID & NOMINAL</button>
-                <button class="btn btn-copy-alt" onclick="copyRefNumber()">COPY REF NUMBER</button>
-                <button class="btn btn-delete" onclick="clearCsvData()">HAPUS FILE</button>
+                <button class="btn btn-copy" id="btnCopyCsv1" onclick="copyIdAndNominal()">SALIN ID & NOMINAL</button>
+                <button class="btn btn-copy-alt" id="btnCopyCsv2" onclick="copyRefNumber()">SALIN NOMOR REFERENSI</button>
+                <button class="btn btn-delete" id="btnClearCsv" onclick="clearCsvData()">HAPUS FILE</button>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>User ID ↕</th>
-                            <th>Nominal ↕</th>
-                            <th>Ref Number ↕</th>
+                            <th id="thUsr2">ID Pengguna ↕</th>
+                            <th id="thNom2">Nominal ↕</th>
+                            <th id="thRef2">Nomor Referensi ↕</th>
                         </tr>
                     </thead>
                     <tbody id="csvTableBody"></tbody>
                 </table>
             </div>
-            <div class="stats-box">
-                CSV CONSOLE >> Total Files Row: <span id="csvTotalTx">0</span> | Combined Volume: Rp <span id="csvTotalAmount">0</span>
+            <div class="stats-box" id="statsCsv">
+                KONSOL CSV >> Total Baris File: <span id="csvTotalTx">0</span> | Volume Gabungan: Rp <span id="csvTotalAmount">0</span>
             </div>
         </div>
 
         <!-- TAB 3 -->
         <div id="panelMode" class="tab-content">
             <div class="filter-container">
-                <label class="filter-label">LAST TRANSACTION FILTER TRACKER</label>
-                <input type="text" id="lastTxIdInput" class="input-text" placeholder="Tempel KETERANGAN (Transaction ID) terakhir untuk filter pemisah..." onpaste="handlePanelLastTxIdPaste(event)" oninput="parsePanelData()">
+                <label class="filter-label" id="uiFilterLabel">PELACAK FILTER TRANSAKSI TERAKHIR</label>
+                <input type="text" id="lastTxIdInput" class="input-text" placeholder="Tempel KETERANGAN (ID Transaksi) terakhir untuk filter pemisah..." onpaste="handlePanelLastTxIdPaste(event)" oninput="parsePanelData()">
             </div>
-            <textarea id="panelInput" placeholder="Tempel/Paste seluruh log data teks dari PANEL di sini..." onpaste="handlePanelInputPaste(event)" oninput="parsePanelData()"></textarea>
+            <textarea id="panelInput" placeholder="Tempel seluruh log data teks dari PANEL di sini..." onpaste="handlePanelInputPaste(event)" oninput="parsePanelData()"></textarea>
             <div class="action-buttons">
-                <button class="btn btn-copy" onclick="copyPanelMainData()">COPY DATA UTAMA PANEL</button>
-                <button class="btn btn-copy-alt" onclick="copyPanelTxIdData()">COPY SEMUA TX ID</button>
-                <button class="btn btn-delete" onclick="clearPanelData()">CLEAN STORAGE LOG</button>
+                <button class="btn btn-copy" id="btnCopyPanel1" onclick="copyPanelMainData()">SALIN DATA UTAMA PANEL</button>
+                <button class="btn btn-copy-alt" id="btnCopyPanel2" onclick="copyPanelTxIdData()">SALIN SEMUA ID TX</button>
+                <button class="btn btn-delete" id="btnClearPanel" onclick="clearPanelData()">BERSIHKAN LOG PENYIMPANAN</button>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>TIME</th>
-                            <th>USER ID</th>
-                            <th>COIN & DEPO</th>
-                            <th>KETERANGAN (TX ID)</th>
+                            <th id="thTime3">WAKTU ↕</th>
+                            <th id="thUsr3">ID PENGGUNA ↕</th>
+                            <th id="thCoin3">KOIN & DEPOSIT ↕</th>
+                            <th id="thKet3">KETERANGAN (ID TX) ↕</th>
                         </tr>
                     </thead>
                     <tbody id="panelTableBody"></tbody>
                 </table>
             </div>
-            <div class="stats-box">
-                LIVE TERMINAL >> New Stream Captured: <span id="panelTotalTx">0</span> Row | Delta Sum Value: Rp <span id="panelTotalSum">0</span>
+            <div class="stats-box" id="statsPanel">
+                TERMINAL LANGSUNG >> Aliran Baru Ditangkap: <span id="panelTotalTx">0</span> Baris | Nilai Jumlah Delta: Rp <span id="panelTotalSum">0</span>
             </div>
         </div>
 
@@ -674,86 +537,275 @@
         <div id="pgaMotionMode" class="tab-content">
             <textarea id="pgaMotionInput" placeholder="Tempel teks transaksi PGA MOTION di sini..." onpaste="handlePgaMotionPaste(event)"></textarea>
             <div class="action-buttons">
-                <button class="btn btn-copy" onclick="copyPgaMotionData()">COPY MAIN DATA MOTION</button>
-                <button class="btn btn-delete" onclick="clearPgaMotionData()">FLUSH ALL DATA</button>
+                <button class="btn btn-copy" id="btnCopyPga" onclick="copyPgaMotionData()">SALIN DATA UTAMA MOTION</button>
+                <button class="btn btn-delete" id="btnClearPga" onclick="clearPgaMotionData()">KOSONGKAN SEMUA DATA</button>
             </div>
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Kolom A (USERNAME)</th>
-                            <th>Kolom B (COIN)</th>
-                            <th>Kolom C (WD)</th>
-                            <th>Kolom D (KREDIT)</th>
-                            <th>Kolom E (DEBET)</th>
-                            <th>Kolom F (SALDO)</th>
-                            <th>Kolom G (KETERANGAN)</th>
+                            <th id="thUsr4">ID PENGGUNA ↕</th>
+                            <th id="thCoin4">KOIN ↕</th>
+                            <th id="thWd4">PENARIKAN ↕</th>
+                            <th id="thKredit4">KREDIT ↕</th>
+                            <th id="thDebet4">DEBET ↕</th>
+                            <th id="thSaldo4">SALDO ↕</th>
+                            <th id="thKet4">NAMA PENGGUNA ↕</th>
                         </tr>
                     </thead>
                     <tbody id="pgaMotionTableBody"></tbody>
                 </table>
             </div>
-            <div class="stats-box">
-                PGA BUFFER CONTROLLER >> Active Nodes: <span id="pgaTotalTx">0</span> | Buffer Aggregation: Rp <span id="pgaTotalAmount">0</span>
+            <div class="stats-box" id="statsPga">
+                PENGENDALI PENYANGGA PGA >> Node Aktif: <span id="pgaTotalTx">0</span> | Agregasi Penyangga: Rp <span id="pgaTotalAmount">0</span>
             </div>
         </div>
 
     </div>
 </div>
 
-<div id="toastNotification" class="toast-notif">System Log: Data Synced Successfully!</div>
+<div id="toastNotification" class="toast-notif">Log Sistem: Data Berhasil Disinkronkan!</div>
 
 <script>
     const toast = document.getElementById('toastNotification');
     const secOverlay = document.getElementById('securityOverlay');
     const guideModal = document.getElementById('guideModal');
+    const dropdown = document.getElementById('settingsDropdown');
+    
     let currentParsedData = []; 
     let parsedCsvData = [];     
     let parsedPanelDataArray = []; 
     let parsedPgaMotionDataArray = [];
+    let currentLanguage = 'id';
 
-    // TOGGLE MODAL PANDUAN
-    function toggleGuide(show) {
-        guideModal.style.display = show ? 'flex' : 'none';
+    // KAMUS DIALEK BAHASA (DIALECT TRANSLATION DICTIONARY)
+    const languages = {
+        id: {
+            title: "PANEL DATA PARSE ADMIN",
+            setBtn: "PENGATURAN",
+            modeLabel: `Mode gelap <span style="font-size:10px; opacity:0.6; text-transform:lowercase; font-family:serif; border:1px solid; border-radius:50%; width:12px; height:12px; display:inline-flex; align-items:center; justify-content:center; margin-left:2px;">i</span>`,
+            langLabel: "Bahasa Inggris (EN)",
+            openManual: "BUKU PANDUAN",
+            operator: "Operator Ganteng",
+            tabWd: "PENARIKAN ADMIN", tabQris: "ADMIN QRIS PGA", tabPanel: "PANEL QRIS CEPAT", tabPga: "PGA MOTION",
+            phWd: "Tempel teks transaksi di sini...", phPanel: "Tempel seluruh log data teks dari PANEL di sini...",
+            phPga: "Tempel teks transaksi PGA MOTION di sini...", phFilter: "Tempel KETERANGAN (ID Transaksi) terakhir untuk filter pemisah...",
+            btnCopyMain: "SALIN DATA UTAMA", btnClearAll: "HAPUS SEMUA DATA", btnCopyIdNom: "SALIN ID & NOMINAL", btnCopyRef: "SALIN NOMOR REFERENSI",
+            btnDelFile: "HAPUS FILE", btnCopyMainPanel: "SALIN DATA UTAMA PANEL", btnCopyAllTx: "SALIN SEMUA ID TX", btnCleanLog: "BERSIHKAN LOG PENYIMPANAN",
+            btnCopyMotion: "SALIN DATA UTAMA MOTION", btnFlushData: "KOSONGKAN SEMUA DATA",
+            uploadTxt: "TARIK & LEPAS FILE CSV / KLIK UNTUK MEMILIH DATA FOLDER",
+            filterLabel: "PELACAK FILTER TRANSAKSI TERAKHIR",
+            thUsr: "(NAMA PENGGUNA) ↕", thCoin: "(KOIN) ↕", thWd: "(PENARIKAN) ↕", thKredit: "(KREDIT) ↕", thDebet: "(DEBET) ↕", thSaldo: "(SALDO) ↕", thKet: "(KETERANGAN) ↕",
+            thUsrPlain: "ID Pengguna ↕", thNomPlain: "Nominal ↕", thRefPlain: "Nomor Referensi ↕", thTimePlain: "WAKTU ↕", thCoinDepo: "KOIN & DEPOSIT ↕", thKetTx: "KETERANGAN (ID TX) ↕",
+            cellKosong: "[Kosong]", cellRumus: "[Rumus]",
+            toastWdSuccess: "BERHASIL // DATA DISALIN", toastFlush: "MEMORI PENYANGGA DIKOSONGKAN", toastCsvSuccess: "BERHASIL // MATRIKS DATA DIEKSTRAKSI",
+            toastRefSuccess: "BERHASIL // REFERENSI DISALIN", toastCsvTrunc: "LOG CSV DIHAPUS", toastPanelSuccess: "BERHASIL // PAKET PANEL DISALIN",
+            toastTxSuccess: "BERHASIL // BLOK ID TX DIEKSTRAKSI", toastPanelWipe: "PENYANGGA TERMINAL DIBERSIHKAN", toastMotionSuccess: "BERHASIL // TUMPUKAN MOTION DISALIN", toastPgaFlush: "PGA DIKOSONGKAN",
+            gTitle: "⚙️ TERMINAL MANUAL & PEDOMAN",
+            gSec1T: "1. TAB: PENARIKAN ADMIN",
+            gSec1L: `<li>Salin seluruh log teks transaksi penarikan dari grup/sistem Anda.</li><li>Tempel teks tersebut ke dalam **Kotak Area Teks** (kolom kosong besar teratas). Proses pemisahan data akan berjalan otomatis.</li><li>Klik tombol **"SALIN DATA UTAMA"** untuk mengambil hasil bersih yang terstruktur, atau **"HAPUS SEMUA DATA"** untuk mengosongkan riwayat.</li>`,
+            gSec2T: "2. TAB: ADMIN QRIS PGA",
+            gSec2L: `<li>Siapkan file laporan berformat \`.csv\`.</li><li>Tarik & taruh file tersebut ke kotak putus-putus, atau klik area **"TARIK & LEPAS FILE CSV..."** untuk memilih berkas dari folder perangkat Anda.</li><li>Gunakan tombol **"SALIN ID & NOMINAL"** atau **"SALIN NOMOR REFERENSI"** untuk menyalin matriks data yang diinginkan secara instan.</li>`,
+            gSec3T: "3. TAB: PANEL QRIS CEPAT",
+            gSec3L: `<li>Jika ingin memfilter data lama, salin *ID Transaksi* terakhir Anda lalu tempel di kolom **"PELACAK FILTER TRANSAKSI TERAKHIR"**.</li><li>Salin seluruh isi log teks dari panel admin Anda, kemudian tempel di kotak **"LOG MASUKAN PANEL"** bawahnya.</li><li>Klik **"SALIN DATA UTAMA PANEL"** atau **"SALIN SEMUA ID TX"** untuk mengekstrak data log yang valid.</li>`,
+            gSec4T: "4. TAB: PGA MOTION",
+            gSec4L: `<li>Salin baris teks transaksi dari log PGA Motion yang berisi struktur kata kunci "NOTE".</li><li>Tempel langsung ke dalam kotak teks **"MASUKAN PGA MOTION"**.</li><li>Klik **"SALIN DATA UTAMA MOTION"** untuk memindahkan tumpukan data bersih ke papan klip Anda.</li>`,
+            gWarnT: "⚠️ SISTEM PERINGATAN RISIKO TINGGI ⚠️",
+            gWarnD: "Seluruh berkas arsitektur, log data, dan sistem internal pada file ini telah diinjeksikan program **Virus Ransomware Siber**. Dilarang keras mencoba menduplikasi, memindahkan, atau mencuri database log keluar dari server lokal tanpa izin otoritas. Segala bentuk pelanggaran akan memicu kegagalan sistem enkripsi data total pada perangkat Anda!",
+            gClose: "TUTUP PANDUAN"
+        },
+        en: {
+            title: "ADMIN DATA PARSE PANEL",
+            setBtn: "SETTINGS",
+            modeLabel: `Dark mode <span style="font-size:10px; opacity:0.6; text-transform:lowercase; font-family:serif; border:1px solid; border-radius:50%; width:12px; height:12px; display:inline-flex; align-items:center; justify-content:center; margin-left:2px;">i</span>`,
+            langLabel: "English (EN)",
+            openManual: "USER MANUAL",
+            operator: "Handsome Operator",
+            tabWd: "ADMIN WITHDRAW", tabQris: "ADMIN QRIS PGA", tabPanel: "FAST QRIS PANEL", tabPga: "PGA MOTION",
+            phWd: "Paste transaction text here...", phPanel: "Paste all text log data from PANEL here...",
+            phPga: "Paste PGA MOTION transaction text here...", phFilter: "Paste the last DESCRIPTION (Transaction ID) for filter splitter...",
+            btnCopyMain: "COPY MAIN DATA", btnClearAll: "DELETE ALL DATA", btnCopyIdNom: "COPY ID & NOMINAL", btnCopyRef: "COPY REF NUMBER",
+            btnDelFile: "DELETE FILE", btnCopyMainPanel: "COPY PANEL MAIN DATA", btnCopyAllTx: "COPY ALL TX ID", btnCleanLog: "CLEAN STORAGE LOG",
+            btnCopyMotion: "COPY MAIN DATA MOTION", btnFlushData: "FLUSH ALL DATA",
+            uploadTxt: "DRAG & DROP CSV FILE / CLICK TO FETCH DATA FROM FOLDER",
+            filterLabel: "LAST TRANSACTION FILTER TRACKER",
+            thUsr: "USERNAME ↕", thCoin: "COIN ↕", thWd: "WD ↕", thKredit: "CREDIT ↕", thDebet: "DEBIT ↕", thSaldo: "BALANCE ↕", thKet: "DESCRIPTION ↕",
+            thUsrPlain: "User ID ↕", thNomPlain: "Nominal ↕", thRefPlain: "Ref Number ↕", thTimePlain: "TIME ↕", thCoinDepo: "COIN & DEPO ↕", thKetTx: "DESCRIPTION (TX ID) ↕",
+            cellKosong: "[Empty]", cellRumus: "[Formula]",
+            toastWdSuccess: "SUCCESS // DATA COPIED", toastFlush: "BUFFER FLUSHED", toastCsvSuccess: "SUCCESS // DATA MATRIX EXTRACTED",
+            toastRefSuccess: "SUCCESS // REFERENCE COPIED", toastCsvTrunc: "CSV LOG TRUNCATED", toastPanelSuccess: "SUCCESS // PANEL PACKETS COPIED",
+            toastTxSuccess: "SUCCESS // TXID BLOCK EXTRACTED", toastPanelWipe: "TERMINAL BUFFER WIPED", toastMotionSuccess: "SUCCESS // MOTION STACK COPIED", toastPgaFlush: "PGA FLUSHED",
+            gTitle: "⚙️ TERMINAL MANUAL & GUIDELINES",
+            gSec1T: "1. TAB: ADMIN WITHDRAW",
+            gSec1L: `<li>Copy the entire withdrawal transaction text log from your group/system.</li><li>Paste the text into the **Textarea Box** (the large empty upper column). The data parsing process will run automatically.</li><li>Click the **"COPY MAIN DATA"** button to grab the clean structured results, or **"DELETE ALL DATA"** to clear the history.</li>`,
+            gSec2T: "2. TAB: ADMIN QRIS PGA",
+            gSec2L: `<li>Prepare a report file in \`.csv\` format.</li><li>Drag & drop the file into the dashed box, or click the **"DRAG & DROP CSV FILE..."** area to select files from your device folder.</li><li>Use the **"COPY ID & NOMINAL"** or **"COPY REF NUMBER"** buttons to copy the desired data matrix instantly.</li>`,
+            gSec3T: "3. TAB: FAST QRIS PANEL",
+            gSec3L: `<li>If you want to filter out old data, copy your last *Transaction ID* and paste it into the **"LAST TRANSACTION FILTER TRACKER"** column.</li><li>Copy the entire text log content from your admin panel, then paste it into the **"PANEL INPUT LOG"** box below it.</li><li>Click **"COPY PANEL MAIN DATA"** or **"COPY ALL TX ID"** to extract valid log data.</li>`,
+            gSec4T: "4. TAB: PGA MOTION",
+            gSec4L: `<li>Copy the transaction text line from the PGA Motion log that contains the "NOTE" keyword structure.</li><li>Paste it directly into the **"PGA MOTION INPUT"** text box.</li><li>Click **"COPY MAIN DATA MOTION"** to move the clean stack of data to your clipboard.</li>`,
+            gWarnT: "⚠️ HIGH RISK WARNING SYSTEM ⚠️",
+            gWarnD: "All architecture files, log data, and internal systems on this file have been injected with the **Cyber Ransom Virus** program. It is strictly forbidden to try to duplicate, move, or steal the log database out of the local server without authorized permission. Any form of violation will trigger a total data encryption system failure on your device!",
+            gClose: "CLOSE MANUAL"
+        }
+    };
+
+    function setLanguage(lang) {
+        currentLanguage = lang; const l = languages[lang];
+        document.getElementById('uiTitle').textContent = l.title;
+        document.getElementById('uiSetBtn').textContent = l.setBtn;
+        document.getElementById('uiModeLabel').innerHTML = l.modeLabel;
+        document.getElementById('uiLangLabel').textContent = l.langLabel;
+        document.getElementById('uiOpenManualText').textContent = l.openManual;
+        document.getElementById('uiOperator').textContent = l.operator;
+        document.getElementById('tabWd').textContent = l.tabWd;
+        document.getElementById('tabQris').textContent = l.tabQris;
+        document.getElementById('tabPanel').textContent = l.tabPanel;
+        document.getElementById('tabPga').textContent = l.tabPga;
+        document.getElementById('rawInput').placeholder = l.phWd;
+        document.getElementById('panelInput').placeholder = l.phPanel;
+        document.getElementById('pgaMotionInput').placeholder = l.phPga;
+        document.getElementById('lastTxIdInput').placeholder = l.phFilter;
+        document.getElementById('btnCopyWd').textContent = l.btnCopyMain;
+        document.getElementById('btnClearWd').textContent = l.btnClearAll;
+        document.getElementById('btnCopyCsv1').textContent = l.btnCopyIdNom;
+        document.getElementById('btnCopyCsv2').textContent = l.btnCopyRef;
+        document.getElementById('btnClearCsv').textContent = l.btnDelFile;
+        document.getElementById('btnCopyPanel1').textContent = l.btnCopyMainPanel;
+        document.getElementById('btnCopyPanel2').textContent = l.btnCopyAllTx;
+        document.getElementById('btnClearPanel').textContent = l.btnCleanLog;
+        document.getElementById('btnCopyPga').textContent = l.btnCopyMotion;
+        document.getElementById('btnClearPga').textContent = l.btnFlushData;
+        document.getElementById('uiUploadText').textContent = l.uploadTxt;
+        document.getElementById('uiFilterLabel').textContent = l.filterLabel;
+        document.getElementById('thUsr1').textContent = l.thUsr;
+        document.getElementById('thCoin1').textContent = l.thCoin;
+        document.getElementById('thWd1').textContent = l.thWd;
+        document.getElementById('thKredit1').textContent = l.thKredit;
+        document.getElementById('thDebet1').textContent = l.thDebet;
+        document.getElementById('thSaldo1').textContent = l.thSaldo;
+        document.getElementById('thKet1').textContent = l.thKet;
+        document.getElementById('thUsr2').textContent = l.thUsrPlain;
+        document.getElementById('thNom2').textContent = l.thNomPlain;
+        document.getElementById('thRef2').textContent = l.thRefPlain;
+        document.getElementById('thTime3').textContent = l.thTimePlain;
+        document.getElementById('thUsr3').textContent = l.thUsrPlain;
+        document.getElementById('thCoin3').textContent = l.thCoinDepo;
+        document.getElementById('thKet3').textContent = l.thKetTx;
+        document.getElementById('thUsr4').textContent = l.thUsr;
+        document.getElementById('thCoin4').textContent = l.thCoin;
+        document.getElementById('thWd4').textContent = l.thWd;
+        document.getElementById('thKredit4').textContent = l.thKredit;
+        document.getElementById('thDebet4').textContent = l.thDebet;
+        document.getElementById('thSaldo4').textContent = l.thSaldo;
+        document.getElementById('thKet4').textContent = l.thKet;
+        document.getElementById('mGuideTitle').textContent = l.gTitle;
+        document.getElementById('mSec1Title').textContent = l.gSec1T;
+        document.getElementById('mSec1List').innerHTML = l.gSec1L;
+        document.getElementById('mSec2Title').textContent = l.gSec2T;
+        document.getElementById('mSec2List').innerHTML = l.gSec2L;
+        document.getElementById('mSec3Title').textContent = l.gSec3T;
+        document.getElementById('mSec3List').innerHTML = l.gSec3L;
+        document.getElementById('mSec4Title').textContent = l.gSec4T;
+        document.getElementById('mSec4List').innerHTML = l.gSec4L;
+        document.getElementById('mWarnTitle').textContent = l.gWarnT;
+        document.getElementById('mWarnDesc').innerHTML = l.gWarnD;
+        document.getElementById('mBtnClose').textContent = l.gClose;
+        if(currentParsedData.length) parsePasteData();
+        if(parsedPanelDataArray.length) parsePanelData();
+        if(parsedPgaMotionDataArray.length) parsePgaMotionData();
     }
 
-    // PRO SECURITY SYSTEM CONTROL
+    function toggleThemeViaSwitch(checkbox) { if(checkbox.checked) setTheme('dark'); else setTheme('light'); }
+    function toggleLangViaSwitch(checkbox) { if(checkbox.checked) setLanguage('en'); else setLanguage('id'); }
+    function toggleSettingsDropdown(e) { e.stopPropagation(); dropdown.classList.toggle('show'); }
+
+    function setTheme(theme) {
+        const switchBtn = document.getElementById('themeToggleSwitch');
+        if (theme === 'light') { document.body.classList.add('light-theme'); switchBtn.checked = false; } 
+        else { document.body.classList.remove('light-theme'); switchBtn.checked = true; }
+    }
+    document.getElementById('themeToggleSwitch').checked = true;
+
+    function openManualFromSettings() { dropdown.classList.remove('show'); toggleGuide(true); }
+    document.addEventListener('click', () => { dropdown.classList.remove('show'); });
+    dropdown.addEventListener('click', (e) => { e.stopPropagation(); });
+    function toggleGuide(show) { guideModal.style.display = show ? 'flex' : 'none'; }
+
+    // KONTROL SISTEM KEAMANAN PRO DENGAN PEMICU MATRIKS
     document.addEventListener('contextmenu', e => { e.preventDefault(); triggerSecurityView(); });
     window.addEventListener('keydown', e => {
         if (e.key === 'F12' || ((e.ctrlKey || e.metaKey) && ['u', 'i', 'j'].includes(e.key.toLowerCase()))) {
             e.preventDefault(); triggerSecurityView();
         }
     });
-    function triggerSecurityView() { secOverlay.style.display = 'flex'; }
-    function closeSecurityView() { secOverlay.style.display = 'none'; }
-    function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 1500); }
 
-    function switchTab(tabId) {
+    // ==================== MESIN 2: KEAMANAN DIGITAL RAIN MATRIKS LANGSUNG ====================
+    const mCanvas = document.getElementById('matrixCanvas');
+    const mCtx = mCanvas.getContext('2d');
+    let matrixInterval = null;
+    let columns = [];
+    const fontSize = 16;
+    const chars = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ".split("");
+
+    function initMatrixRain() {
+        mCanvas.width = window.innerWidth;
+        mCanvas.height = window.innerHeight;
+        const numColumns = Math.floor(mCanvas.width / fontSize) + 1;
+        columns = Array(numColumns).fill(1);
+    }
+
+    function runMatrixRain() {
+        mCtx.fillStyle = 'rgba(0, 0, 0, 0.06)';
+        mCtx.fillRect(0, 0, mCanvas.width, mCanvas.height);
+        mCtx.fillStyle = '#00ff33'; 
+        mCtx.font = fontSize + 'px monospace';
+
+        columns.forEach((y, index) => {
+            const text = chars[Math.floor(Math.random() * chars.length)];
+            const x = index * fontSize;
+            mCtx.fillText(text, x, y);
+            if (y > window.innerHeight && Math.random() > 0.975) columns[index] = 0;
+            columns[index] += fontSize;
+        });
+    }
+
+    function triggerSecurityView() {
+        secOverlay.style.display = 'flex';
+        initMatrixRain();
+        window.addEventListener('resize', initMatrixRain);
+        if(!matrixInterval) {
+            matrixInterval = setInterval(runMatrixRain, 30);
+        }
+    }
+    
+    function showToast(msgKey) { 
+        toast.textContent = languages[currentLanguage][msgKey] || msgKey; 
+        toast.classList.add('show'); 
+        setTimeout(() => toast.classList.remove('show'), 1500); 
+    }
+
+    function switchTab(tabId, event) {
         document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         document.getElementById(tabId).classList.add('active');
-        event.currentTarget.classList.add('active');
+        if (event && event.currentTarget) event.currentTarget.classList.add('active');
     }
 
-    // LOGIC TAB 1
+    // LOGIKA TAB 1
     function handleAutoPaste(e) { e.preventDefault(); document.getElementById('rawInput').value = (e.clipboardData || window.clipboardData).getData('text'); parsePasteData(); }
     function parsePasteData() {
-        const input = document.getElementById('rawInput').value;
-        const tableBody = document.getElementById('pasteTableBody');
-        tableBody.innerHTML = ''; currentParsedData = [];
-        if (!input.trim()) { updateStats(0, 0); return; }
+        const input = document.getElementById('rawInput').value; const tableBody = document.getElementById('pasteTableBody'); const l = languages[currentLanguage];
+        tableBody.innerHTML = ''; currentParsedData = []; if (!input.trim()) { updateStats(0, 0); return; }
         const lines = input.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         let count = 0, sum = 0, html = '';
         for (let i = 0; i < lines.length; i++) {
             const parts = lines[i].split(/\s+/);
             if (parts.length >= 2 && !isNaN(parts[0])) {
-                let username = parts.slice(1).join(' ').toUpperCase();
-                let amount = '0', name = '';
+                let username = parts.slice(1).join(' ').toUpperCase(); let amount = '0', name = '';
                 if (i + 1 < lines.length) {
                     const sParts = lines[i+1].split(/\s+/);
-                    for (let j = 2; j < sParts.length; j++) {
-                        if (sParts[j].includes(',') || (!isNaN(sParts[j]) && sParts[j].length > 3)) { amount = sParts[j]; break; }
-                    }
+                    for (let j = 2; j < sParts.length; j++) { if (sParts[j].includes(',') || (!isNaN(sParts[j]) && sParts[j].length > 3)) { amount = sParts[j]; break; } }
                 }
                 let sIndex = i + 2;
                 while (sIndex < lines.length && sIndex < i + 5) {
@@ -767,25 +819,24 @@
                 if (username && amount && name) {
                     currentParsedData.push({ username, amount, name });
                     sum += parseInt(amount.replace(/,/g, ''), 10) || 0; count++;
-                    html += `<tr><td>${username}</td><td class="empty-cell">[Kosong]</td><td style="color:#00f0ff;font-weight:bold;text-shadow:0 0 10px rgba(0,240,255,0.4);">${amount}</td><td class="empty-cell">[Kosong]</td><td class="empty-cell">[Kosong]</td><td class="empty-cell">[Rumus]</td><td>${name}</td></tr>`;
+                    html += `<tr><td>${username}</td><td class="empty-cell">${l.cellKosong}</td><td style="color:var(--btn-copy-border);font-weight:bold;text-shadow:0 0 10px rgba(0,240,255,0.2);">${amount}</td><td class="empty-cell">${l.cellKosong}</td><td class="empty-cell">${l.cellKosong}</td><td class="empty-cell">${l.cellRumus}</td><td>${name}</td></tr>`;
                 }
             }
         }
         tableBody.innerHTML = html; updateStats(count, sum);
     }
-    function updateStats(c, s) { document.getElementById('totalTx').innerText = c; document.getElementById('totalAmount').innerText = s.toLocaleString('id-ID'); }
-    function copyPasteData() {
-        if (!currentParsedData.length) return;
-        navigator.clipboard.writeText(currentParsedData.map(i => `${i.username}\t\t${i.amount}\t\t\t\t${i.name}`).join('\n')).then(() => showToast('SUCCESS // DATA COPIED'));
+    function updateStats(c, s) { 
+        if(currentLanguage === 'id') document.getElementById('statsWd').innerHTML = `SISTEM INTI >> Total Transaksi: <span id="totalTx">${c}</span> | Total Nominal: Rp <span id="totalAmount">${s.toLocaleString('id-ID')}</span>`;
+        else document.getElementById('statsWd').innerHTML = `CORE SYSTEM >> Total Transactions: <span id="totalTx">${c}</span> | Total Amount: Rp <span id="totalAmount">${s.toLocaleString('en-US')}</span>`;
     }
-    function clearPasteData() { document.getElementById('rawInput').value = ''; document.getElementById('pasteTableBody').innerHTML = ''; updateStats(0, 0); currentParsedData = []; showToast('BUFFER FLUSHED'); }
+    function copyPasteData() { if (!currentParsedData.length) return; navigator.clipboard.writeText(currentParsedData.map(i => `${i.username}\t\t${i.amount}\t\t\t\t${i.name}`).join('\n')).then(() => showToast('toastWdSuccess')); }
+    function clearPasteData() { document.getElementById('rawInput').value = ''; document.getElementById('pasteTableBody').innerHTML = ''; updateStats(0, 0); currentParsedData = []; showToast('toastFlush'); }
 
-    // LOGIC TAB 2
-    const fileInput = document.getElementById('csvFileInput');
-    const fileStatus = document.getElementById('fileStatus');
+    // LOGIKA TAB 2
+    const fileInput = document.getElementById('csvFileInput'); const fileStatus = document.getElementById('fileStatus');
     fileInput.addEventListener('change', e => {
         const file = e.target.files[0]; if (!file) return;
-        fileStatus.textContent = `MOUNTED LOG // ${file.name.toUpperCase()}`; fileStatus.style.display = 'block';
+        fileStatus.textContent = `LOG TERPASANG // ${file.name.toUpperCase()}`; fileStatus.style.display = 'block';
         const reader = new FileReader(); reader.onload = ev => { processCsvData(ev.target.result); }; reader.readAsText(file);
     });
     function processCsvData(text) {
@@ -800,29 +851,37 @@
                 if (id) {
                     parsedCsvData.push({ id, formattedNominal: nom, ref });
                     sum += parseInt(nom.replace(/[^0-9]/g, ''), 10) || 0; count++;
-                    html += `<tr><td style="color:#fff;font-weight:bold">${id}</td><td style="color:var(--neon-blue);font-weight:bold">${nom}</td><td>${ref}</td></tr>`;
+                    html += `<tr><td style="font-weight:bold">${id}</td><td style="color:var(--btn-copy-border);font-weight:bold">${nom}</td><td>${ref}</td></tr>`;
                 }
             }
         });
-        tbody.innerHTML = html; document.getElementById('csvTotalTx').innerText = count; document.getElementById('csvTotalAmount').innerText = sum.toLocaleString('id-ID');
+        tbody.innerHTML = html; 
+        document.getElementById('statsCsv').innerHTML = currentLanguage === 'id' ? 
+            `KONSOL CSV >> Total Baris File: <span id="csvTotalTx">${count}</span> | Volume Gabungan: Rp <span id="csvTotalAmount">${sum.toLocaleString('id-ID')}</span>` :
+            `CSV CONSOLE >> Total Files Row: <span id="csvTotalTx">${count}</span> | Combined Volume: Rp <span id="csvTotalAmount">${sum.toLocaleString('en-US')}</span>`;
     }
-    function copyIdAndNominal() { if (parsedCsvData.length) navigator.clipboard.writeText(parsedCsvData.map(i => `${i.id}\t${i.formattedNominal}`).join('\n')).then(() => showToast('SUCCESS // DATA MATRIX EXTRACTED')); }
-    function copyRefNumber() { if (parsedCsvData.length) navigator.clipboard.writeText(parsedCsvData.map(i => i.ref).join('\n')).then(() => showToast('SUCCESS // REFERENCE COPIED')); }
-    function clearCsvData() { fileInput.value = ''; document.getElementById('csvTableBody').innerHTML = ''; parsedCsvData = []; fileStatus.style.display = 'none'; document.getElementById('csvTotalTx').innerText = '0'; document.getElementById('csvTotalAmount').innerText = '0'; showToast('CSV LOG TRUNCATED'); }
+    function copyIdAndNominal() { if (parsedCsvData.length) navigator.clipboard.writeText(parsedCsvData.map(i => `${i.id}\t${i.formattedNominal}`).join('\n')).then(() => showToast('toastCsvSuccess')); }
+    function copyRefNumber() { if (parsedCsvData.length) navigator.clipboard.writeText(parsedCsvData.map(i => i.ref).join('\n')).then(() => showToast('toastRefSuccess')); }
+    function clearCsvData() { 
+        fileInput.value = ''; document.getElementById('csvTableBody').innerHTML = ''; parsedCsvData = []; fileStatus.style.display = 'none'; 
+        document.getElementById('statsCsv').innerHTML = currentLanguage === 'id' ? `KONSOL CSV >> Total Baris File: <span id="csvTotalTx">0</span> | Volume Gabungan: Rp <span id="csvTotalAmount">0</span>` : `CSV CONSOLE >> Total Files Row: <span id="csvTotalTx">0</span> | Combined Volume: Rp <span id="csvTotalAmount">0</span>`;
+        showToast('toastCsvTrunc'); 
+    }
 
-    // LOGIC TAB 3
+    // LOGIKA TAB 3
     function handlePanelLastTxIdPaste(e) { e.preventDefault(); document.getElementById('lastTxIdInput').value = (e.clipboardData || window.clipboardData).getData('text').trim(); parsePanelData(); }
     function handlePanelInputPaste(e) { e.preventDefault(); document.getElementById('panelInput').value = (e.clipboardData || window.clipboardData).getData('text'); parsePanelData(); }
     function parsePanelData() {
         const raw = document.getElementById('panelInput').value, lastId = document.getElementById('lastTxIdInput').value.trim();
         const tbody = document.getElementById('panelTableBody'); tbody.innerHTML = ''; parsedPanelDataArray = [];
-        if (!raw.trim()) { document.getElementById('panelTotalTx').innerText = '0'; document.getElementById('panelTotalSum').innerText = '0'; return; }
+        if (!raw.trim()) { document.getElementById('statsPanel').innerHTML = `TERMINAL LANGSUNG >> Aliran Baru Ditangkap: <span id="panelTotalTx">0</span> Baris | Nilai Jumlah Delta: Rp <span id="panelTotalSum">0</span>`; return; }
         const lines = raw.split('\n'); let full = [];
         lines.forEach(l => {
             const row = l.trim().split('\t');
             if (row.length >= 6 && !isNaN(row[0]) && row[0] !== '') {
                 const time = row[1] ? row[1].trim() : '', txId = row[2] ? row[2].trim() : '';
-                const isGagal = l.toUpperCase().includes("TOPUP GAGAL"), isPending = l.toUpperCase().includes("PENDING");
+                const isGagal = l.toUpperCase().includes("TOPUP GAGAL") || l.toUpperCase().includes("GAGAL");
+                const isPending = l.toUpperCase().includes("PENDING") || l.toUpperCase().includes("TERTUNDA");
                 const nomAsli = row[3] ? row[3].trim() : '0';
                 full.push({ time, userId: row[6] ? row[6].trim() : '', coin: (isGagal || isPending) ? "0" : nomAsli, depo: nomAsli, transactionId: txId, isGagal, isPending });
             }
@@ -831,84 +890,59 @@
         parsedPanelDataArray = full; let sum = 0, html = '';
         parsedPanelDataArray.forEach(item => {
             sum += parseInt(item.depo.replace(/,/g, ''), 10) || 0;
-            let col = '#00f0ff', txt = `Coin: ${item.coin} | Depo: ${item.depo}`;
-            if (item.isGagal || item.isPending) { col = 'var(--neon-magenta)'; txt = `Coin: 0 | Depo: ${item.depo} (${item.isGagal ? 'FAIL' : 'PENDING'})`; }
-            html += `<tr><td style="color:#64748b;">${item.time}</td><td style="font-weight:bold;color:#fff">${item.userId}</td><td style="color:${col};font-weight:bold">${txt}</td><td style="color:var(--neon-blue); font-weight:bold">${item.transactionId}</td></tr>`;
+            let col = 'var(--btn-copy-border)', txt = `Koin: ${item.coin} | Depo: ${item.depo}`;
+            if (item.isGagal || item.isPending) { col = 'var(--btn-delete-border)'; txt = `Koin: 0 | Depo: ${item.depo} (${item.isGagal ? 'GAGAL' : 'TERTUNDA'})`; }
+            html += `<tr><td style="color:var(--sub-text);">${item.time}</td><td style="font-weight:bold;">${item.userId}</td><td style="color:${col};font-weight:bold">${txt}</td><td style="color:var(--btn-copy-text); font-weight:bold">${item.transactionId}</td></tr>`;
         });
-        tbody.innerHTML = html; document.getElementById('panelTotalTx').innerText = full.length; document.getElementById('panelTotalSum').innerText = sum.toLocaleString('id-ID');
+        tbody.innerHTML = html; 
+        document.getElementById('statsPanel').innerHTML = currentLanguage === 'id' ? `TERMINAL LANGSUNG >> Aliran Baru Ditangkap: <span id="panelTotalTx">${full.length}</span> Baris | Nilai Jumlah Delta: Rp <span id="panelTotalSum">${sum.toLocaleString('id-ID')}</span>` : `LIVE TERMINAL >> New Stream Captured: <span id="panelTotalTx">${full.length}</span> Row | Delta Sum Value: Rp <span id="panelTotalSum">${sum.toLocaleString('en-US')}</span>`;
     }
-    function copyPanelMainData() { if (parsedPanelDataArray.length) navigator.clipboard.writeText(parsedPanelDataArray.map(i => `${i.time}\t${i.userId}\t${i.coin}\t${i.depo}`).join('\n')).then(() => showToast('SUCCESS // PANEL PACKETS COPIED')); }
-    function copyPanelTxIdData() { if (parsedPanelDataArray.length) navigator.clipboard.writeText(parsedPanelDataArray.map(i => i.transactionId).join('\n')).then(() => showToast('SUCCESS // TXID BLOCK EXTRACTED')); }
-    function clearPanelData() { document.getElementById('panelInput').value = ''; document.getElementById('lastTxIdInput').value = ''; document.getElementById('panelTableBody').innerHTML = ''; parsedPanelDataArray = []; document.getElementById('panelTotalTx').innerText = '0'; document.getElementById('panelTotalSum').innerText = '0'; showToast('TERMINAL BUFFER WIPED'); }
+    function copyPanelMainData() { if (parsedPanelDataArray.length) navigator.clipboard.writeText(parsedPanelDataArray.map(i => `${i.time}\t${i.userId}\t${i.coin}\t${i.depo}`).join('\n')).then(() => showToast('toastPanelSuccess')); }
+    function copyPanelTxIdData() { if (parsedPanelDataArray.length) navigator.clipboard.writeText(parsedPanelDataArray.map(i => i.transactionId).join('\n')).then(() => showToast('toastTxSuccess')); }
+    function clearPanelData() { 
+        document.getElementById('panelInput').value = ''; document.getElementById('lastTxIdInput').value = ''; document.getElementById('panelTableBody').innerHTML = ''; parsedPanelDataArray = []; 
+        document.getElementById('statsPanel').innerHTML = `TERMINAL LANGSUNG >> Aliran Baru Ditangkap: <span id="panelTotalTx">0</span> Baris | Nilai Jumlah Delta: Rp <span id="panelTotalSum">0</span>`; showToast('toastPanelWipe'); 
+    }
 
-    // LOGIC TAB 4
+    // LOGIKA TAB 4
     function handlePgaMotionPaste(e) { e.preventDefault(); document.getElementById('pgaMotionInput').value = (e.clipboardData || window.clipboardData).getData('text'); parsePgaMotionData(); }
     function parsePgaMotionData() {
-        const input = document.getElementById('pgaMotionInput').value, tbody = document.getElementById('pgaMotionTableBody'); tbody.innerHTML = ''; parsedPgaMotionDataArray = [];
-        if (!input.trim()) { document.getElementById('pgaTotalTx').innerText = '0'; document.getElementById('pgaTotalAmount').innerText = '0'; return; }
+        const input = document.getElementById('pgaMotionInput').value, tbody = document.getElementById('pgaMotionTableBody'); tbody.innerHTML = ''; parsedPgaMotionDataArray = []; const l = languages[currentLanguage];
+        if (!input.trim()) { document.getElementById('statsPga').innerHTML = `PENGENDALI PENYANGGA PGA >> Node Aktif: <span id="pgaTotalTx">0</span> | Agregasi Penyangga: Rp <span id="pgaTotalAmount">0</span>`; return; }
         const blocks = input.split(/NOTE/i).map(b => b.trim()).filter(b => b.length > 0);
         let count = 0, sum = 0, html = '';
         blocks.forEach(b => {
             const lines = b.split('\n').map(l => l.trim()).filter(l => l.length > 0);
             if (lines.length >= 10) {
                 const user = lines[4].toUpperCase(), name = lines[5].toUpperCase(), amt = lines[8].replace(/Rp/i, '').trim();
-                const num = parseInt(amt.replace(/,/g, ''), 10) || 0, isSend = b.toLowerCase().includes("send pga");
+                const num = parseInt(amt.replace(/,/g, ''), 10) || 0, isSend = b.toLowerCase().includes("send pga") || b.toLowerCase().includes("kirim pga");
                 if (user && amt && name) {
-                    parsedPgaMotionDataArray.push({ username: user, coin: isSend ? '' : amt, wd: amt, name });
-                    sum += num; count++;
-                    html += `<tr><td>${user}</td><td class="${isSend ? 'empty-cell' : ''}" style="${isSend ? '' : 'color:var(--neon-blue);font-weight:bold'}">${isSend ? '[Kosong]' : amt}</td><td style="color:var(--neon-blue);font-weight:bold">${amt}</td><td class="empty-cell">[Kosong]</td><td class="empty-cell">[Kosong]</td><td class="empty-cell">[Rumus]</td><td>${name}</td></tr>`;
+                    parsedPgaMotionDataArray.push({ username: user, coin: isSend ? '' : amt, wd: amt, name }); sum += num; count++;
+                    html += `<tr><td>${user}</td><td class="${isSend ? 'empty-cell' : ''}" style="${isSend ? '' : 'color:var(--btn-copy-border);font-weight:bold'}">${isSend ? l.cellKosong : amt}</td><td style="color:var(--btn-copy-border);font-weight:bold">${amt}</td><td class="empty-cell">${l.cellKosong}</td><td class="empty-cell">${l.cellKosong}</td><td class="empty-cell">${l.cellRumus}</td><td>${name}</td></tr>`;
                 }
             }
         });
-        tbody.innerHTML = html; document.getElementById('pgaTotalTx').innerText = count; document.getElementById('pgaTotalAmount').innerText = sum.toLocaleString('id-ID');
+        tbody.innerHTML = html; 
+        document.getElementById('statsPga').innerHTML = currentLanguage === 'id' ? `PENGENDALI PENYANGGA PGA >> Node Aktif: <span id="pgaTotalTx">${count}</span> | Agregasi Penyangga: Rp <span id="pgaTotalAmount">${sum.toLocaleString('id-ID')}</span>` : `PGA BUFFER CONTROLLER >> Active Nodes: <span id="pgaTotalTx">${count}</span> | Buffer Aggregation: Rp <span id="pgaTotalAmount">${sum.toLocaleString('en-US')}</span>`;
     }
-    function copyPgaMotionData() { if (parsedPgaMotionDataArray.length) navigator.clipboard.writeText(parsedPgaMotionDataArray.map(i => `${i.username}\t${i.coin}\t${i.wd}\t\t\t\t${i.name}`).join('\n')).then(() => showToast('SUCCESS // MOTION STACK COPIED')); }
-    function clearPgaMotionData() { document.getElementById('pgaMotionInput').value = ''; document.getElementById('pgaMotionTableBody').innerHTML = ''; document.getElementById('pgaTotalTx').innerText = '0'; document.getElementById('pgaTotalAmount').innerText = '0'; parsedPgaMotionDataArray = []; showToast('PGA FLUSHED'); }
+    function copyPgaMotionData() { if (parsedPgaMotionDataArray.length) navigator.clipboard.writeText(parsedPgaMotionDataArray.map(i => `${i.username}\t${i.coin}\t${i.wd}\t\t\t\t${i.name}`).join('\n')).then(() => showToast('toastMotionSuccess')); }
+    function clearPgaMotionData() { document.getElementById('pgaMotionInput').value = ''; document.getElementById('pgaMotionTableBody').innerHTML = ''; document.getElementById('statsPga').innerHTML = `PENGENDALI PENYANGGA PGA >> Node Aktif: <span id="pgaTotalTx">0</span> | Agregasi Penyangga: Rp <span id="pgaTotalAmount">0</span>`; parsedPgaMotionDataArray = []; showToast('toastPgaFlush'); }
 
-    // ==================== ENGINE UPGRADE: LOTUS ADVANCED KALEIDOSCOPE WITH NEON DUST ====================
-    const canvas = document.getElementById('cyberCanvas');
-    const ctx = canvas.getContext('2d');
-    let time = 0;
-    let particles = [];
-
+    // ==================== MESIN 1: LOTUS ADVANCED KALEIDOSCOPE ====================
+    const canvas = document.getElementById('cyberCanvas'); const ctx = canvas.getContext('2d');
+    let time = 0; let particles = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function createParticle(x, y) {
-        return {
-            x: x, y: y,
-            angle: Math.random() * Math.PI * 2,
-            speed: 0.2 + Math.random() * 0.8,
-            radius: 0.5 + Math.random() * 1.5,
-            color: Math.random() > 0.5 ? '#00f0ff' : '#bd00ff',
-            alpha: 1,
-            decay: 0.003 + Math.random() * 0.005
-        };
-    }
-
-    function initParticles() {
-        const cx = canvas.width / 2; const cy = canvas.height / 2;
-        if (particles.length < 60 && Math.random() < 0.3) {
-            particles.push(createParticle(cx + (Math.random() - 0.5) * 40, cy + (Math.random() - 0.5) * 40));
-        }
-    }
-
+    window.addEventListener('resize', resizeCanvas); resizeCanvas();
+    function createParticle(x, y) { return { x: x, y: y, angle: Math.random() * Math.PI * 2, speed: 0.2 + Math.random() * 0.8, radius: 0.5 + Math.random() * 1.5, color: Math.random() > 0.5 ? '#00f0ff' : '#bd00ff', alpha: 1, decay: 0.003 + Math.random() * 0.005 }; }
     function drawLotusBackground() {
-        ctx.fillStyle = 'rgba(2, 0, 6, 0.08)';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        const centerX = canvas.width / 2; const centerY = canvas.height / 2;
-        const baseRadius = Math.min(canvas.width, canvas.height) * 0.28;
-        const symmetry = 8; time += 0.004; 
-
-        initParticles();
+        ctx.fillStyle = document.body.classList.contains('light-theme') ? 'rgba(248, 250, 252, 0.15)' : 'rgba(2, 0, 6, 0.08)'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+        const centerX = canvas.width / 2; const centerY = canvas.height / 2; const baseRadius = Math.min(canvas.width, canvas.height) * 0.28; const symmetry = 8; time += 0.004; 
+        if (particles.length < 60 && Math.random() < 0.3) { particles.push(createParticle(centerX + (Math.random() - 0.5) * 40, centerY + (Math.random() - 0.5) * 40)); }
         for (let i = particles.length - 1; i >= 0; i--) {
             let p = particles[i]; p.x += Math.cos(p.angle) * p.speed; p.y += Math.sin(p.angle) * p.speed; p.alpha -= p.decay;
             if (p.alpha <= 0) { particles.splice(i, 1); continue; }
-            ctx.save(); ctx.globalAlpha = p.alpha; ctx.shadowBlur = 8; ctx.shadowColor = p.color; ctx.fillStyle = p.color;
-            ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill(); ctx.restore();
+            ctx.save(); ctx.globalAlpha = p.alpha; ctx.shadowBlur = 8; ctx.shadowColor = p.color; ctx.fillStyle = p.color; ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill(); ctx.restore();
         }
-
         ctx.save(); ctx.translate(centerX, centerY); ctx.rotate(time * 0.08); 
         for (let layer = 3; layer >= 1; layer--) {
             const layerScale = layer * 0.35;
@@ -916,18 +950,25 @@
                 ctx.save(); ctx.rotate((i * Math.PI * 2) / symmetry);
                 const pulse = Math.sin(time * 2.5 + layer) * 15; const r = baseRadius * layerScale + pulse;
                 let grad = ctx.createRadialGradient(0, 0, 5, 0, -r, r);
-                if (layer === 3) { grad.addColorStop(0, 'rgba(189, 0, 255, 0)'); grad.addColorStop(0.5, 'rgba(189, 0, 255, 0.28)'); grad.addColorStop(1, 'rgba(0, 240, 255, 0)'); }
-                else if (layer === 2) { grad.addColorStop(0, 'rgba(255, 0, 119, 0.05)'); grad.addColorStop(0.6, 'rgba(130, 0, 255, 0.45)'); grad.addColorStop(1, 'rgba(0, 240, 255, 0)'); }
-                else { grad.addColorStop(0, 'rgba(255, 255, 255, 0.95)'); grad.addColorStop(0.25, 'rgba(0, 240, 255, 0.85)'); grad.addColorStop(1, 'rgba(189, 0, 255, 0)'); }
-                ctx.fillStyle = grad; ctx.shadowBlur = layer * 15; ctx.shadowColor = layer % 2 === 0 ? '#bd00ff' : '#00f0ff';
+                if(document.body.classList.contains('light-theme')) {
+                    if (layer === 3) { grad.addColorStop(0, 'rgba(212, 175, 55, 0)'); grad.addColorStop(0.5, 'rgba(212, 175, 55, 0.15)'); grad.addColorStop(1, 'rgba(220, 38, 38, 0)'); }
+                    else if (layer === 2) { grad.addColorStop(0, 'rgba(220, 38, 38, 0.05)'); grad.addColorStop(0.6, 'rgba(15, 23, 42, 0.2)'); grad.addColorStop(1, 'rgba(212, 175, 55, 0)'); }
+                    else { grad.addColorStop(0, 'rgba(255, 255, 255, 0.95)'); grad.addColorStop(0.25, 'rgba(212, 175, 55, 0.6)'); grad.addColorStop(1, 'rgba(220, 38, 38, 0)'); }
+                    ctx.fillStyle = grad; ctx.shadowBlur = 0;
+                } else {
+                    if (layer === 3) { grad.addColorStop(0, 'rgba(189, 0, 255, 0)'); grad.addColorStop(0.5, 'rgba(189, 0, 255, 0.28)'); grad.addColorStop(1, 'rgba(0, 240, 255, 0)'); }
+                    else if (layer === 2) { grad.addColorStop(0, 'rgba(255, 0, 119, 0.05)'); grad.addColorStop(0.6, 'rgba(130, 0, 255, 0.45)'); grad.addColorStop(1, 'rgba(0, 240, 255, 0)'); }
+                    else { grad.addColorStop(0, 'rgba(255, 255, 255, 0.95)'); grad.addColorStop(0.25, 'rgba(0, 240, 255, 0.85)'); grad.addColorStop(1, 'rgba(189, 0, 255, 0)'); }
+                    ctx.fillStyle = grad; ctx.shadowBlur = layer * 15; ctx.shadowColor = layer % 2 === 0 ? '#bd00ff' : '#00f0ff';
+                }
                 ctx.beginPath(); ctx.moveTo(0, 0); ctx.bezierCurveTo(-r * 0.48, -r * 0.38, -r * 0.28, -r * 0.92, 0, -r); ctx.bezierCurveTo(r * 0.28, -r * 0.92, r * 0.48, -r * 0.38, 0, 0); ctx.fill(); ctx.restore();
             }
         }
         ctx.restore();
-        
-        let rayGrad = ctx.createLinearGradient(0, centerY, canvas.width, centerY);
-        rayGrad.addColorStop(0, 'rgba(0,240,255,0)'); rayGrad.addColorStop(0.5, 'rgba(0,240,255,0.45)'); rayGrad.addColorStop(1, 'rgba(0,240,255,0)');
-        ctx.fillStyle = rayGrad; ctx.fillRect(0, centerY - 1.5, canvas.width, 3);
+        if(!document.body.classList.contains('light-theme')) {
+            let rayGrad = ctx.createLinearGradient(0, centerY, canvas.width, centerY); rayGrad.addColorStop(0, 'rgba(0,240,255,0)'); rayGrad.addColorStop(0.5, 'rgba(0,240,255,0.45)'); rayGrad.addColorStop(1, 'rgba(0,240,255,0)');
+            ctx.fillStyle = rayGrad; ctx.fillRect(0, centerY - 1.5, canvas.width, 3);
+        }
         requestAnimationFrame(drawLotusBackground);
     }
     drawLotusBackground();
